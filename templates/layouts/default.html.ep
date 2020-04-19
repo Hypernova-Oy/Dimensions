@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary"">
+      <a class="navbar-brand" href="/">Hypernova Dimensions</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/api/gui/editor">Editor</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Dimensions
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="/api/gui/dimensions/products">By Product</a>
+              <a class="dropdown-item" href="/api/gui/dimensions/users">By User</a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/api/gui/products">Products</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/api/gui/users">Users</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/api/gui/event/log">Event logs</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav navbar-right">
+          <li class="nav-item">
+            <div id="login">
+              <label for="api_key">API key</label> <input type="text" id="api_key" />
+              <label for="api_secret">API secret</label> <input type="text" id="api_secret"/>
+              <button id="login-btn" class="btn btn-primary">Login</button>
+            </div>
+            <div id="logout">
+              <button id="logout-btn" class="btn btn-danger">Log out</button>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <%= content %>
+  </body>
+  <script type="text/javascript" src="/js/js.cookie.min.js"></script>
+  <script type="text/javascript" src="/js/crypto-js.min.js"></script>
+  <script type="text/javascript" src="/js/hmac-sha256.min.js"></script>
+  <script type="text/javascript">
+    var x_api_key = Cookies.get('X-API-KEY');
+    var x_api_secret = Cookies.get('X-API-SECRET');
+
+    updateLogin();
+    function updateLogin() {
+      x_api_key = Cookies.get('X-API-KEY');
+      x_api_secret = Cookies.get('X-API-SECRET')
+      if (x_api_key && x_api_secret) {
+        $("div#login").css("display", "none");
+        $("div#logout").css("display", "block");
+      } else {
+        $("div#login").css("display", "block");
+        $("div#logout").css("display", "none");
+      }
+    }
+
+    function addAuthenticationHeaders(req) {
+        var timestamp = new Date().getTime();
+        var nonce = timestamp + "" + Math.floor(Math.random() * 10000000);
+
+        var hash = CryptoJS.HmacSHA256(
+          x_api_key,
+          x_api_secret+""+nonce+""+timestamp
+        );
+
+        req.setRequestHeader("X-API-KEY", x_api_key);
+        req.setRequestHeader("X-API-SIGNATURE", hash.toString(CryptoJS.enc.Hex));
+        req.setRequestHeader("X-API-NONCE", nonce);
+        req.setRequestHeader("X-API-TIMESTAMP", timestamp);
+
+        return hash.toString(CryptoJS.enc.Hex);
+    }
+
+    $(document).ready(function () {
+      $("button#login-btn").on('click', function (e) {
+        x_api_key = $("input#api_key").val();
+        x_api_secret= $("input#api_secret").val();
+
+        Cookies.set('X-API-KEY', x_api_key);
+        Cookies.set('X-API-SECRET', x_api_secret);
+        location.reload();
+      });
+      $("button#logout-btn").on('click', function (e) {
+        Cookies.remove('X-API-KEY');
+        Cookies.remove('X-API-SECRET');
+        location.reload();
+      });
+    });
+  </script>
+  <link rel="stylesheet" type="text/css" href="/css/index.css"></link>
+</html>
+

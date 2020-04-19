@@ -1,0 +1,295 @@
+{
+  "/account/entries": {
+    "get": {
+      "operationId": "listAccountEntries",
+      "x-mojo-name": "list_account_entries",
+      "x-mojo-to": "AccountEntries#list",
+      "summary": "Finds account entries in the system",
+      "security": [
+        { "api_key": [] }
+      ],
+      "x-permissions": {
+        "account_entries": ["read"]
+      },
+      "parameters": [
+        {
+          "in": "query",
+          "name": "username",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "query",
+          "name": "password",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "query",
+          "name": "created_at",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "query",
+          "name": "modified_at",
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "AccountEntries response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "records": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "../schemas.json#/AccountEntry"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "../responses.json#/BadRequest"
+        },
+        "401": {
+          "$ref": "../responses.json#/Unauthorized"
+        },
+        "403": {
+          "$ref": "../responses.json#/Forbidden"
+        },
+        "500": {
+          "$ref": "../responses.json#/InternalServerError"
+        },
+        "503": {
+          "$ref": "../responses.json#/ServiceUnavailable"
+        }
+      }
+    },
+    "post": {
+      "operationId": "addAccountEntries",
+      "x-mojo-name": "add_account_entries",
+      "x-mojo-to": "AccountEntries#add",
+      "summary": "Adds account entries into the system",
+      "security": [
+        { "api_key": [] }
+      ],
+      "x-permissions": {
+        "account_entries": ["create"]
+      },
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../schemas.json#/AccountEntry"
+            }
+          }
+        }
+      },
+      "responses": {
+        "201": {
+          "description": "AccountEntries created",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../schemas.json#/AccountEntry"
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "../responses.json#/BadRequest"
+        },
+        "401": {
+          "$ref": "../responses.json#/Unauthorized"
+        },
+        "403": {
+          "$ref": "../responses.json#/Forbidden"
+        },
+        "500": {
+          "$ref": "../responses.json#/InternalServerError"
+        },
+        "503": {
+          "$ref": "../responses.json#/ServiceUnavailable"
+        }
+      }
+    }
+  },
+  "/account/entries/{id}": {
+    "get": {
+      "operationId": "getAccountEntries",
+      "x-mojo-name": "get_account_entries",
+      "x-mojo-to": "AccountEntries#get",
+      "summary": "Finds account entries in the system",
+      "security": [
+        { "api_key": [] }
+      ],
+      "x-permissions": {
+        "account_entries": ["read"]
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "AccountEntries response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../schemas.json#/AccountEntry"
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "../responses.json#/BadRequest"
+        },
+        "401": {
+          "$ref": "../responses.json#/Unauthorized"
+        },
+        "403": {
+          "$ref": "../responses.json#/Forbidden"
+        },
+        "404": {
+          "$ref": "../responses.json#/NotFound"
+        },
+        "500": {
+          "$ref": "../responses.json#/InternalServerError"
+        },
+        "503": {
+          "$ref": "../responses.json#/ServiceUnavailable"
+        }
+      }
+    },
+    "put": {
+      "operationId": "editAccountEntries",
+      "x-mojo-name": "edit_account_entries",
+      "x-mojo-to": "AccountEntries#edit",
+      "summary": "Edits account entries in the system",
+      "security": [
+        { "api_key": [] }
+      ],
+      "x-permissions": {
+        "account_entries": ["update"]
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../schemas.json#/AccountEntry"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "AccountEntries edited",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../schemas.json#/AccountEntry"
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "../responses.json#/BadRequest"
+        },
+        "401": {
+          "$ref": "../responses.json#/Unauthorized"
+        },
+        "403": {
+          "$ref": "../responses.json#/Forbidden"
+        },
+        "404": {
+          "$ref": "../responses.json#/NotFound"
+        },
+        "500": {
+          "$ref": "../responses.json#/InternalServerError"
+        },
+        "503": {
+          "$ref": "../responses.json#/ServiceUnavailable"
+        }
+      }
+    },
+    "delete": {
+      "operationId": "deleteAccountEntries",
+      "x-mojo-name": "delete_account_entries",
+      "x-mojo-to": "AccountEntries#delete",
+      "summary": "Deletes account entries in the system",
+      "security": [
+        { "api_key": [] }
+      ],
+      "x-permissions": {
+        "account_entries": ["delete"]
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "responses": {
+        "204": {
+          "description": "AccountEntries deleted",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "../responses.json#/BadRequest"
+        },
+        "401": {
+          "$ref": "../responses.json#/Unauthorized"
+        },
+        "403": {
+          "$ref": "../responses.json#/Forbidden"
+        },
+        "404": {
+          "$ref": "../responses.json#/NotFound"
+        },
+        "500": {
+          "$ref": "../responses.json#/InternalServerError"
+        },
+        "503": {
+          "$ref": "../responses.json#/ServiceUnavailable"
+        }
+      }
+    }
+  }
+}

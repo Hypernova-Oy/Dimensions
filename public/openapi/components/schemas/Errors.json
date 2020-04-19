@@ -1,0 +1,16 @@
+{
+  "type": "object",
+  "properties": {
+    "errors": {
+      "type": "array",
+      "items": {
+        "schema": {
+          "$ref": "Error.json"
+        }
+      }
+    },
+    "status": {
+      "type": "integer"
+    }
+  }
+}

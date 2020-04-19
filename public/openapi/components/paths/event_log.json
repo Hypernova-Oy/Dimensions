@@ -1,0 +1,295 @@
+{
+  "/event/log": {
+    "get": {
+      "operationId": "listEventLog",
+      "x-mojo-name": "list_event_log",
+      "x-mojo-to": "EventLog#list",
+      "summary": "Finds event log in the system",
+      "security": [
+        { "api_key": [] }
+      ],
+      "x-permissions": {
+        "event_log": ["read"]
+      },
+      "parameters": [
+        {
+          "in": "query",
+          "name": "username",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "query",
+          "name": "password",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "query",
+          "name": "created_at",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "query",
+          "name": "modified_at",
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "EventLog response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "records": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "../schemas.json#/EventLog"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "../responses.json#/BadRequest"
+        },
+        "401": {
+          "$ref": "../responses.json#/Unauthorized"
+        },
+        "403": {
+          "$ref": "../responses.json#/Forbidden"
+        },
+        "500": {
+          "$ref": "../responses.json#/InternalServerError"
+        },
+        "503": {
+          "$ref": "../responses.json#/ServiceUnavailable"
+        }
+      }
+    },
+    "post": {
+      "operationId": "addEventLog",
+      "x-mojo-name": "add_event_log",
+      "x-mojo-to": "EventLog#add",
+      "summary": "Adds event log into the system",
+      "security": [
+        { "api_key": [] }
+      ],
+      "x-permissions": {
+        "event_log": ["create"]
+      },
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../schemas.json#/EventLog"
+            }
+          }
+        }
+      },
+      "responses": {
+        "201": {
+          "description": "EventLog created",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../schemas.json#/EventLog"
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "../responses.json#/BadRequest"
+        },
+        "401": {
+          "$ref": "../responses.json#/Unauthorized"
+        },
+        "403": {
+          "$ref": "../responses.json#/Forbidden"
+        },
+        "500": {
+          "$ref": "../responses.json#/InternalServerError"
+        },
+        "503": {
+          "$ref": "../responses.json#/ServiceUnavailable"
+        }
+      }
+    }
+  },
+  "/event/log/{id}": {
+    "get": {
+      "operationId": "getEventLog",
+      "x-mojo-name": "get_event_log",
+      "x-mojo-to": "EventLog#get",
+      "summary": "Finds event log in the system",
+      "security": [
+        { "api_key": [] }
+      ],
+      "x-permissions": {
+        "event_log": ["read"]
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "EventLog response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../schemas.json#/EventLog"
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "../responses.json#/BadRequest"
+        },
+        "401": {
+          "$ref": "../responses.json#/Unauthorized"
+        },
+        "403": {
+          "$ref": "../responses.json#/Forbidden"
+        },
+        "404": {
+          "$ref": "../responses.json#/NotFound"
+        },
+        "500": {
+          "$ref": "../responses.json#/InternalServerError"
+        },
+        "503": {
+          "$ref": "../responses.json#/ServiceUnavailable"
+        }
+      }
+    },
+    "put": {
+      "operationId": "editEventLog",
+      "x-mojo-name": "edit_event_log",
+      "x-mojo-to": "EventLog#edit",
+      "summary": "Edits event log in the system",
+      "security": [
+        { "api_key": [] }
+      ],
+      "x-permissions": {
+        "event_log": ["update"]
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../schemas.json#/EventLog"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "EventLog edited",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../schemas.json#/EventLog"
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "../responses.json#/BadRequest"
+        },
+        "401": {
+          "$ref": "../responses.json#/Unauthorized"
+        },
+        "403": {
+          "$ref": "../responses.json#/Forbidden"
+        },
+        "404": {
+          "$ref": "../responses.json#/NotFound"
+        },
+        "500": {
+          "$ref": "../responses.json#/InternalServerError"
+        },
+        "503": {
+          "$ref": "../responses.json#/ServiceUnavailable"
+        }
+      }
+    },
+    "delete": {
+      "operationId": "deleteEventLog",
+      "x-mojo-name": "delete_event_log",
+      "x-mojo-to": "EventLog#delete",
+      "summary": "Deletes event log in the system",
+      "security": [
+        { "api_key": [] }
+      ],
+      "x-permissions": {
+        "event_log": ["delete"]
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "responses": {
+        "204": {
+          "description": "EventLog deleted",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "../responses.json#/BadRequest"
+        },
+        "401": {
+          "$ref": "../responses.json#/Unauthorized"
+        },
+        "403": {
+          "$ref": "../responses.json#/Forbidden"
+        },
+        "404": {
+          "$ref": "../responses.json#/NotFound"
+        },
+        "500": {
+          "$ref": "../responses.json#/InternalServerError"
+        },
+        "503": {
+          "$ref": "../responses.json#/ServiceUnavailable"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,347 @@
+{
+  "/users": {
+    "get": {
+      "operationId": "listUsers",
+      "x-mojo-name": "list_users",
+      "x-mojo-to": "Users#list",
+      "summary": "Finds users in the system",
+      "security": [
+        { "api_key": [] }
+      ],
+      "x-permissions": {
+        "users": ["read"]
+      },
+      "parameters": [
+        {
+          "in": "query",
+          "name": "username",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "query",
+          "name": "created_at",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "query",
+          "name": "modified_at",
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Users response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "records": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "../schemas.json#/User"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "../responses.json#/BadRequest"
+        },
+        "401": {
+          "$ref": "../responses.json#/Unauthorized"
+        },
+        "403": {
+          "$ref": "../responses.json#/Forbidden"
+        },
+        "500": {
+          "$ref": "../responses.json#/InternalServerError"
+        },
+        "503": {
+          "$ref": "../responses.json#/ServiceUnavailable"
+        }
+      }
+    },
+    "post": {
+      "operationId": "addUser",
+      "x-mojo-name": "add_user",
+      "x-mojo-to": "Users#add",
+      "summary": "Adds an user into the system",
+      "security": [
+        { "api_key": [] }
+      ],
+      "x-permissions": {
+        "users": ["create"]
+      },
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../schemas.json#/User"
+            }
+          }
+        }
+      },
+      "responses": {
+        "201": {
+          "description": "User created",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../schemas.json#/User"
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "../responses.json#/BadRequest"
+        },
+        "401": {
+          "$ref": "../responses.json#/Unauthorized"
+        },
+        "403": {
+          "$ref": "../responses.json#/Forbidden"
+        },
+        "500": {
+          "$ref": "../responses.json#/InternalServerError"
+        },
+        "503": {
+          "$ref": "../responses.json#/ServiceUnavailable"
+        }
+      }
+    }
+  },
+  "/users/{id}": {
+    "get": {
+      "operationId": "getUser",
+      "x-mojo-name": "get_user",
+      "x-mojo-to": "Users#get",
+      "summary": "Finds user in the system",
+      "security": [
+        { "api_key": [] }
+      ],
+      "x-permissions": {
+        "users": ["read"]
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "User response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../schemas.json#/User"
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "../responses.json#/BadRequest"
+        },
+        "401": {
+          "$ref": "../responses.json#/Unauthorized"
+        },
+        "403": {
+          "$ref": "../responses.json#/Forbidden"
+        },
+        "404": {
+          "$ref": "../responses.json#/NotFound"
+        },
+        "500": {
+          "$ref": "../responses.json#/InternalServerError"
+        },
+        "503": {
+          "$ref": "../responses.json#/ServiceUnavailable"
+        }
+      }
+    },
+    "put": {
+      "operationId": "editUser",
+      "x-mojo-name": "edit_user",
+      "x-mojo-to": "Users#edit",
+      "summary": "Edits an user in the system",
+      "security": [
+        { "api_key": [] }
+      ],
+      "x-permissions": {
+        "users": ["update"]
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../schemas.json#/User"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "User edited",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../schemas.json#/User"
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "../responses.json#/BadRequest"
+        },
+        "401": {
+          "$ref": "../responses.json#/Unauthorized"
+        },
+        "403": {
+          "$ref": "../responses.json#/Forbidden"
+        },
+        "404": {
+          "$ref": "../responses.json#/NotFound"
+        },
+        "500": {
+          "$ref": "../responses.json#/InternalServerError"
+        },
+        "503": {
+          "$ref": "../responses.json#/ServiceUnavailable"
+        }
+      }
+    },
+    "delete": {
+      "operationId": "deleteUser",
+      "x-mojo-name": "delete_user",
+      "x-mojo-to": "Users#delete",
+      "summary": "Deletes an user in the system",
+      "security": [
+        { "api_key": [] }
+      ],
+      "x-permissions": {
+        "users": ["delete"]
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "responses": {
+        "204": {
+          "description": "User deleted",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "../responses.json#/BadRequest"
+        },
+        "401": {
+          "$ref": "../responses.json#/Unauthorized"
+        },
+        "403": {
+          "$ref": "../responses.json#/Forbidden"
+        },
+        "404": {
+          "$ref": "../responses.json#/NotFound"
+        },
+        "500": {
+          "$ref": "../responses.json#/InternalServerError"
+        },
+        "503": {
+          "$ref": "../responses.json#/ServiceUnavailable"
+        }
+      }
+    }
+  },
+  "/users/dimensions": {
+    "get": {
+      "operationId": "userDimensions",
+      "x-mojo-name": "user_dimensions",
+      "x-mojo-to": "Users#dimensions",
+      "summary": "Get users dimensions",
+      "parameters": [
+        {
+          "in": "query",
+          "name": "date_start",
+          "schema": {
+            "type": "string",
+            "format": "date"
+          }
+        },
+        {
+          "in": "query",
+          "name": "date_end",
+          "schema": {
+            "type": "string",
+            "format": "date"
+          }
+        }
+      ],
+      "security": [
+        { "api_key": [] }
+      ],
+      "x-permissions": {
+        "account_entries_user_dimensions": ["read"]
+      },
+      "responses": {
+        "200": {
+          "description": "Dimensions response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "../responses.json#/BadRequest"
+        },
+        "401": {
+          "$ref": "../responses.json#/Unauthorized"
+        },
+        "403": {
+          "$ref": "../responses.json#/Forbidden"
+        },
+        "500": {
+          "$ref": "../responses.json#/InternalServerError"
+        },
+        "503": {
+          "$ref": "../responses.json#/ServiceUnavailable"
+        }
+      }
+    }
+  }
+}

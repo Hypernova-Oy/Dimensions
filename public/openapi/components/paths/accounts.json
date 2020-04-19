@@ -1,0 +1,295 @@
+{
+  "/accounts": {
+    "get": {
+      "operationId": "listAccounts",
+      "x-mojo-name": "list_accounts",
+      "x-mojo-to": "Accounts#list",
+      "summary": "Finds accounts in the system",
+      "security": [
+        { "api_key": [] }
+      ],
+      "x-permissions": {
+        "accounts": ["read"]
+      },
+      "parameters": [
+        {
+          "in": "query",
+          "name": "username",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "query",
+          "name": "password",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "query",
+          "name": "created_at",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "query",
+          "name": "modified_at",
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Accounts response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "records": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "../schemas.json#/Account"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "../responses.json#/BadRequest"
+        },
+        "401": {
+          "$ref": "../responses.json#/Unauthorized"
+        },
+        "403": {
+          "$ref": "../responses.json#/Forbidden"
+        },
+        "500": {
+          "$ref": "../responses.json#/InternalServerError"
+        },
+        "503": {
+          "$ref": "../responses.json#/ServiceUnavailable"
+        }
+      }
+    },
+    "post": {
+      "operationId": "addAccounts",
+      "x-mojo-name": "add_accounts",
+      "x-mojo-to": "Accounts#add",
+      "summary": "Adds accounts into the system",
+      "security": [
+        { "api_key": [] }
+      ],
+      "x-permissions": {
+        "accounts": ["create"]
+      },
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../schemas.json#/Account"
+            }
+          }
+        }
+      },
+      "responses": {
+        "201": {
+          "description": "Accounts created",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../schemas.json#/Account"
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "../responses.json#/BadRequest"
+        },
+        "401": {
+          "$ref": "../responses.json#/Unauthorized"
+        },
+        "403": {
+          "$ref": "../responses.json#/Forbidden"
+        },
+        "500": {
+          "$ref": "../responses.json#/InternalServerError"
+        },
+        "503": {
+          "$ref": "../responses.json#/ServiceUnavailable"
+        }
+      }
+    }
+  },
+  "/accounts/{id}": {
+    "get": {
+      "operationId": "getAccounts",
+      "x-mojo-name": "get_accounts",
+      "x-mojo-to": "Accounts#get",
+      "summary": "Finds accounts in the system",
+      "security": [
+        { "api_key": [] }
+      ],
+      "x-permissions": {
+        "accounts": ["read"]
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Accounts response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../schemas.json#/Account"
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "../responses.json#/BadRequest"
+        },
+        "401": {
+          "$ref": "../responses.json#/Unauthorized"
+        },
+        "403": {
+          "$ref": "../responses.json#/Forbidden"
+        },
+        "404": {
+          "$ref": "../responses.json#/NotFound"
+        },
+        "500": {
+          "$ref": "../responses.json#/InternalServerError"
+        },
+        "503": {
+          "$ref": "../responses.json#/ServiceUnavailable"
+        }
+      }
+    },
+    "put": {
+      "operationId": "editAccounts",
+      "x-mojo-name": "edit_accounts",
+      "x-mojo-to": "Accounts#edit",
+      "summary": "Edits accounts in the system",
+      "security": [
+        { "api_key": [] }
+      ],
+      "x-permissions": {
+        "accounts": ["update"]
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../schemas.json#/Account"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Accounts edited",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../schemas.json#/Account"
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "../responses.json#/BadRequest"
+        },
+        "401": {
+          "$ref": "../responses.json#/Unauthorized"
+        },
+        "403": {
+          "$ref": "../responses.json#/Forbidden"
+        },
+        "404": {
+          "$ref": "../responses.json#/NotFound"
+        },
+        "500": {
+          "$ref": "../responses.json#/InternalServerError"
+        },
+        "503": {
+          "$ref": "../responses.json#/ServiceUnavailable"
+        }
+      }
+    },
+    "delete": {
+      "operationId": "deleteAccounts",
+      "x-mojo-name": "delete_accounts",
+      "x-mojo-to": "Accounts#delete",
+      "summary": "Deletes accounts in the system",
+      "security": [
+        { "api_key": [] }
+      ],
+      "x-permissions": {
+        "accounts": ["delete"]
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "responses": {
+        "204": {
+          "description": "Accounts deleted",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "../responses.json#/BadRequest"
+        },
+        "401": {
+          "$ref": "../responses.json#/Unauthorized"
+        },
+        "403": {
+          "$ref": "../responses.json#/Forbidden"
+        },
+        "404": {
+          "$ref": "../responses.json#/NotFound"
+        },
+        "500": {
+          "$ref": "../responses.json#/InternalServerError"
+        },
+        "503": {
+          "$ref": "../responses.json#/ServiceUnavailable"
+        }
+      }
+    }
+  }
+}

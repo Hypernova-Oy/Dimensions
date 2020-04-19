@@ -1,0 +1,78 @@
+{
+  "/gui/editor": {
+    "get": {
+      "operationId": "indexEditor",
+      "x-mojo-name": "index_editor",
+      "x-mojo-to": "GUI::Editor#index",
+      "summary": "Show editor",
+      "responses": {
+        "200": {
+          "description": "Editor GUI response",
+          "content": {
+            "text/html": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "../../responses.json#/BadRequest"
+        },
+        "401": {
+          "$ref": "../../responses.json#/Unauthorized"
+        },
+        "403": {
+          "$ref": "../../responses.json#/Forbidden"
+        },
+        "500": {
+          "$ref": "../../responses.json#/InternalServerError"
+        },
+        "503": {
+          "$ref": "../../responses.json#/ServiceUnavailable"
+        }
+      }
+    }
+  },
+  "/gui/editor/datatable/content": {
+    "get": {
+      "operationId": "datatableContentEditor",
+      "x-mojo-name": "datatable_content_editor",
+      "x-mojo-to": "GUI::Editor#datatable_content",
+      "summary": "Show editor datatable_content",
+      "security": [
+        { "api_key": [] }
+      ],
+      "x-permissions": {
+        "account_entries": ["read"]
+      },
+      "responses": {
+        "200": {
+          "description": "Editor response",
+          "content": {
+            "text/html": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "../../responses.json#/BadRequest"
+        },
+        "401": {
+          "$ref": "../../responses.json#/Unauthorized"
+        },
+        "403": {
+          "$ref": "../../responses.json#/Forbidden"
+        },
+        "500": {
+          "$ref": "../../responses.json#/InternalServerError"
+        },
+        "503": {
+          "$ref": "../../responses.json#/ServiceUnavailable"
+        }
+      }
+    }
+  }
+}

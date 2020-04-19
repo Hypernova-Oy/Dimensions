@@ -1,0 +1,416 @@
+% layout 'default';
+% title 'Editor';
+<link rel="stylesheet" type="text/css" href="/css/datatables.min.css"></link>
+<style type="text/css">
+button.user_edit, button.user_delete {
+  margin: 0 5px;
+}
+</style>
+<h2>Users</h2>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg" style="padding:30px;">
+      <h3>Create or modify user</h3>
+      <p id="modifying_notification" class="text-warning" style="display:none">Modifying <span id="modifying_username"></span> <a href="#" id="cancel_edit">(Cancel)</a></a></p>
+      <label for="username">Username</label>
+      <input type="text" id="username" />
+      <input type="hidden" id="user_id" />
+      <button id="user-submit" class="btn btn-primary">Submit</button>
+    </div>
+  </div>
+<table id="table_users" class="table table-striped table-bordered" style="width:100%">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tfoot>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Actions</th>
+    </tr>
+  </tfoot>
+</table>
+</div>
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/js/datatables.min.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+$(document).ready(function() {
+    get_api_keys();
+    get_permissions();
+    var table_users = $('#table_users').DataTable( {
+        "ajax": {
+          url: "/api/users",
+          beforeSend: function (req) {
+            addAuthenticationHeaders(req);
+          },
+          dataSrc: "records"
+        },
+        "columns": [
+            { "data": "id" },
+            { "data": "username" },
+            {
+                data: null,
+                defaultContent: '<button class="user_expand btn btn-primary">Expand</button>'+
+                                '<button class="user_edit btn btn-warning">Edit</button>'+
+                                '<button class="user_delete btn btn-danger">Delete</button>'
+            }
+        ]
+    } );
+
+    // Add event listener for opening and closing details
+    $('#table_users tbody').on('click', 'button.user_expand', function (e) {
+        var tr = $(this).closest('tr');
+        var row = table_users.row( tr );
+
+        if ( row.child.isShown() ) {
+            // This row is already open - close it
+            row.child.hide();
+            tr.removeClass('shown');
+        }
+        else {
+            // Open this row
+            row.child( format_dimensions(row.data()) ).show();
+            tr.addClass('shown');
+        }
+    } );
+
+    $('#table_users').on('click', 'button.user_edit', function (e) {
+      var tr = $(this).closest('tr');
+      var row = table_users.row( tr );
+      var user_id = row.data()["id"];
+      var username = row.data()["username"];
+      $("p#modifying_notification").css("display", "block");
+      $("span#modifying_username").html('"'+username+'"')
+      $("input#user_id").val(user_id);
+      $("input#username").val(username);
+    });
+
+    $('#table_users').on('click', 'button.user_delete', function (e) {
+      var tr = $(this).closest('tr');
+      var row = table_users.row( tr );
+      var user_id = row.data()["id"];
+      var username = row.data()["username"];
+      var r = confirm('Do you really want to delete user "' + username + '"');
+      if (!r) {
+        return 0;
+      }
+      $.ajax({
+        url: "/api/users/" + user_id,
+        method: "DELETE",
+        dataType: "json",
+        contentType: "application/json",
+        beforeSend: function (req) {
+          addAuthenticationHeaders(req);
+        }
+      }).done(function(d) {
+          table_users.ajax.reload(null,false);
+      }).fail(function(data) {
+        alert("failed: " + JSON.stringify(data));
+      });
+    });
+
+    $('a#cancel_edit').on('click', function (e) {
+      reset_create_form();
+    });
+
+    $('button#user-submit').on('click', function (e) {
+      var json_data = {};
+      json_data["username"] = $("input#username").val();
+      var method = "POST";
+      var url = "/api/users"
+      if ($("input#user_id").val()) {
+        method = "PUT";
+        url += "/" + $("input#user_id").val();
+        json_data["id"] = $("input#user_id").val();
+      }
+      $.ajax({
+        url: url,
+        method: method,
+        dataType: "json",
+        contentType: "application/json",
+        data: JSON.stringify(json_data),
+        beforeSend: function (req) {
+          addAuthenticationHeaders(req);
+        }
+      }).done(function(d) {
+          table_users.ajax.reload(null,false);
+      }).fail(function(data) {
+        alert("failed: " + JSON.stringify(data));
+      });
+      reset_create_form();
+    });
+
+    $('#table_users tbody').on('click', 'button.api_key_toggle', function (e) {
+      var el = $(this);
+      var new_active = el.attr('data-api-key-active')==1?0:1;
+      var json_data = {
+        active: new_active
+      };
+      var api_key_id = el.attr('data-api-key-id');
+      $.ajax({
+        url: "/api/keys/" + api_key_id,
+        method: "PUT",
+        dataType: "json",
+        data: JSON.stringify(json_data),
+        contentType: "application/json",
+        beforeSend: function (req) {
+          addAuthenticationHeaders(req);
+        }
+      }).done(function(d) {
+          get_api_keys();
+          el.attr('data-api-key-active', new_active);
+          table_users.ajax.reload(null,false);
+      }).fail(function(data) {
+        alert("failed: " + JSON.stringify(data));
+      });
+    });
+
+    $('#table_users tbody').on('click', 'button.api_key_submit', function (e) {
+      var el = $(this);
+      var api_secret = el.parent().prev().children('input').val();
+      var api_key = el.parent().prev().prev().children('input').val();
+      var user_id = parseInt(el.attr('data-user-id'));
+      var json_data = {
+        active: 1,
+        api_key: api_key,
+        api_secret: api_secret,
+        user_id: user_id
+      };
+      $.ajax({
+        url: "/api/keys",
+        method: "POST",
+        dataType: "json",
+        data: JSON.stringify(json_data),
+        contentType: "application/json",
+        beforeSend: function (req) {
+          addAuthenticationHeaders(req);
+        }
+      }).done(function(d) {
+          get_api_keys();
+          table_users.ajax.reload(null,false);
+      }).fail(function(data) {
+        alert("failed: " + JSON.stringify(data));
+      });
+    });
+
+    $('#table_users tbody').on('click', 'input.permission_toggle', function (e) {
+      var el = $(this);
+      var granted = el.is(':checked');
+      var user_id = el.attr('data-user-id');
+      var permission_id = el.attr('data-permission-id');
+      var user_permission_id = el.attr('data-user-permission-id');
+      var json_data = {
+        user_id: user_id,
+        permission_id: permission_id
+      };
+      if (!granted) {
+        $.ajax({
+          url: "/api/users/permissions/" + user_permission_id,
+          method: "DELETE",
+          dataType: "json",
+          contentType: "application/json",
+          beforeSend: function (req) {
+            addAuthenticationHeaders(req);
+          }
+        }).done(function(d) {
+            get_permissions();
+            el.prop('checked', false);
+        }).fail(function(data) {
+          alert("failed: " + JSON.stringify(data));
+        });
+      } else {
+        $.ajax({
+          url: "/api/users/permissions",
+          method: "POST",
+          dataType: "json",
+          data: JSON.stringify(json_data),
+          contentType: "application/json",
+          beforeSend: function (req) {
+            addAuthenticationHeaders(req);
+          }
+        }).done(function(d) {
+            get_permissions();
+            el.prop('checked', true);
+            el.attr('data-user-permission-id', d.id);
+        }).fail(function(data) {
+          alert("failed: " + JSON.stringify(data));
+        });
+      }
+    });
+} );
+
+function reset_create_form() {
+    $("p#modifying_notification").css("display", "none");
+    $("span#modifying_username").html("");
+    $("input#username").val("");
+    $("input#user_id").val("");
+}
+
+function format_dimensions ( d ) {
+    // `d` is the original data object for the row
+
+    var user_expanded = '<div class="container">';
+
+    // api keys table
+    user_expanded += '<div class="table-responsive"><table class="table">'+
+            '<thead>'+
+            '<tr class="table-warning">'+
+              '<th>API Key</th>'+
+              '<th>API Secret</th>'+
+              '<th>Active</th>'+
+            '</tr>'+
+            '</thead>'+
+            '<tbody>';
+
+    for (var i=0; i<api_keys[d.id].length;i++) {
+        var api_id = api_keys[d.id][i].id;
+        var api_key = api_keys[d.id][i].api_key;
+        var api_active = api_keys[d.id][i].active;
+
+        user_expanded += '<tr>'+
+          '<td>'+api_key+'</td>'+
+          '<td>hidden</td>'+
+          '<td><button class="api_key_toggle btn '+(api_active?'btn-danger':'btn-success')+'" data-api-key-id="'+api_id+'" data-api-key-active="'+api_active+'">'+(api_active?'Disable':'Enable')+'</button></td>'+
+          '</tr>';
+    }
+
+    user_expanded += '<tr>'+
+                       '<td><input type="text" class="api_key" value="'+CryptoJS.HmacSHA256(Math.random().toString(36).substr(2), d.username).toString(CryptoJS.enc.Hex)+'" /></td>'+
+                       '<td><input type="text" class="api_secret" value="'+CryptoJS.HmacSHA256(Math.random().toString(36).substr(2), d.username).toString(CryptoJS.enc.Hex)+'" /></td>'+
+                       '<td><button class="api_key_submit btn btn-success" data-user-id="'+d.id+'">Create new</button></td>'+
+                     '</tr>';
+
+    user_expanded += '</tbody>'+
+            '<tfoot>'+
+            '<tr class="table-warning">'+
+              '<th>API Key</th>'+
+              '<th>API Secret</th>'+
+              '<th>Active</th>'+
+            '</tr>'+
+            '</tfoot>'+
+          '</table></div>';
+
+    user_expanded += '<div class="table-responsive"><table class="table">'+
+            '<thead>'+
+            '<tr class="table-info">'+
+              '<th>Category</th>'+
+              '<th>Permission</th>'+
+              '<th>Granted</th>'+
+            '</tr>'+
+            '</thead>'+
+            '<tbody>';
+
+    for (var key in permissions) {
+        var permission_id = key;
+        var permission_name = permissions[key].name;
+        var permission_category = permissions[key].permission_category_name;
+        var has_user_permission = users_permissions[d.id]?users_permissions[d.id][permission_id]?1:0:0;
+        var user_permission_id = has_user_permission?users_permissions[d.id][permission_id]:0;
+        user_expanded += '<tr>'+
+          '<td>'+permission_category+'</td>'+
+          '<td>'+permission_name+'</td>'+
+          '<td><input class="permission_toggle" type="checkbox" data-permission-id="'+permission_id+'" data-user-id="'+d.id+'" data-user-permission-id="'+user_permission_id+'" '+(has_user_permission?'checked':'')+'/></td>'+
+          '</tr>';
+    }
+
+    user_expanded += '</tbody>'+
+            '<tfoot>'+
+            '<tr class="table-info">'+
+              '<th>Category</th>'+
+              '<th>Permission</th>'+
+              '<th>Granted</th>'+
+            '</tr>'+
+            '</tfoot>'+
+          '</table></div>';
+    return user_expanded;
+}
+
+function get_api_keys() {
+    api_keys = {};
+    $.ajax({
+      url: "/api/keys",
+      dataType: "json",
+      beforeSend: function (req) {
+        addAuthenticationHeaders(req);
+      },
+    }).done(function(d) {
+        for (var i=0; i<d.records.length;i++) {
+            if (typeof api_keys[d.records[i].user_id] === 'undefined') {
+              api_keys[d.records[i].user_id] = [];
+            }
+            api_keys[d.records[i].user_id].push({
+              id: d.records[i].id,
+              api_key: d.records[i].api_key,
+              api_secret: d.records[i].api_secret,
+              active: d.records[i].active
+            });
+        }
+    }).fail(function(data) {
+      alert("failed: " + JSON.stringify(data));
+    });
+}
+
+function get_permissions() {
+    permissions = {};
+    var permissions_categories = {};
+    users_permissions = {};
+    $.ajax({
+      url: "/api/permissions/categories",
+      dataType: "json",
+      beforeSend: function (req) {
+        addAuthenticationHeaders(req);
+      },
+    }).done(function(d) {
+      for (var i=0; i<d.records.length;i++) {
+        permissions_categories[d.records[i].id] = d.records[i].name;
+      }
+
+      $.ajax({
+        url: "/api/permissions",
+        dataType: "json",
+        beforeSend: function (req) {
+          addAuthenticationHeaders(req);
+        },
+      }).done(function(d) {
+          for (var i=0; i<d.records.length;i++) {
+            permissions[d.records[i].id] = {
+              permission_category_id: d.records[i].permission_category_id,
+              permission_category_name: permissions_categories[d.records[i].permission_category_id],
+              name: d.records[i].name
+            };
+          }
+      }).fail(function(data) {
+        alert("failed: " + JSON.stringify(data));
+      });
+
+      $.ajax({
+        url: "/api/users/permissions",
+        dataType: "json",
+        beforeSend: function (req) {
+          addAuthenticationHeaders(req);
+        },
+      }).done(function(d) {
+          for (var i=0; i<d.records.length;i++) {
+            if (typeof users_permissions[d.records[i].user_id] === 'undefined') {
+              users_permissions[d.records[i].user_id] = {};
+            }
+            users_permissions[d.records[i].user_id][d.records[i].permission_id] = d.records[i].id;
+          }
+      }).fail(function(data) {
+        alert("failed: " + JSON.stringify(data));
+      });
+    }).fail(function(data) {
+      alert("failed: " + JSON.stringify(data));
+    });
+}
+var api_keys = {};
+var permissions = {};
+var users_permissions = {};
+
+/* ]]> */
+</script>

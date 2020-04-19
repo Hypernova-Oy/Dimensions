@@ -1,0 +1,369 @@
+{
+  "/account/entries/user/dimensions": {
+    "get": {
+      "operationId": "listAccountEntriesUserDimensions",
+      "x-mojo-name": "list_account_entries_user_dimensions",
+      "x-mojo-to": "AccountEntriesUserDimensions#list",
+      "summary": "Finds account entries user dimensions in the system",
+      "security": [
+        { "api_key": [] }
+      ],
+      "x-permissions": {
+        "account_entries_user_dimensions": ["read"]
+      },
+      "parameters": [
+        {
+          "in": "query",
+          "name": "username",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "query",
+          "name": "password",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "query",
+          "name": "created_at",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "query",
+          "name": "modified_at",
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "AccountEntriesUserDimensions response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "records": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "../schemas.json#/AccountEntriesUserDimension"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "../responses.json#/BadRequest"
+        },
+        "401": {
+          "$ref": "../responses.json#/Unauthorized"
+        },
+        "403": {
+          "$ref": "../responses.json#/Forbidden"
+        },
+        "500": {
+          "$ref": "../responses.json#/InternalServerError"
+        },
+        "503": {
+          "$ref": "../responses.json#/ServiceUnavailable"
+        }
+      }
+    },
+    "post": {
+      "operationId": "addAccountEntriesUserDimensions",
+      "x-mojo-name": "add_account_entries_user_dimensions",
+      "x-mojo-to": "AccountEntriesUserDimensions#add",
+      "summary": "Adds account entries account entries user dimensions dimensions into the system",
+      "security": [
+        { "api_key": [] }
+      ],
+      "x-permissions": {
+        "account_entries_user_dimensions": ["create"]
+      },
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../schemas.json#/AccountEntriesUserDimension"
+            }
+          }
+        }
+      },
+      "responses": {
+        "201": {
+          "description": "AccountEntriesUserDimensions created",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../schemas.json#/AccountEntriesUserDimension"
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "../responses.json#/BadRequest"
+        },
+        "401": {
+          "$ref": "../responses.json#/Unauthorized"
+        },
+        "403": {
+          "$ref": "../responses.json#/Forbidden"
+        },
+        "500": {
+          "$ref": "../responses.json#/InternalServerError"
+        },
+        "503": {
+          "$ref": "../responses.json#/ServiceUnavailable"
+        }
+      }
+    }
+  },
+  "/account/entries/user/dimensions/{id}": {
+    "get": {
+      "operationId": "getAccountEntriesUserDimensions",
+      "x-mojo-name": "get_account_entries_user_dimensions",
+      "x-mojo-to": "AccountEntriesUserDimensions#get",
+      "summary": "Finds account entries user dimensions in the system",
+      "security": [
+        { "api_key": [] }
+      ],
+      "x-permissions": {
+        "account_entries_user_dimensions": ["read"]
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "AccountEntriesUserDimensions response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../schemas.json#/AccountEntriesUserDimension"
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "../responses.json#/BadRequest"
+        },
+        "401": {
+          "$ref": "../responses.json#/Unauthorized"
+        },
+        "403": {
+          "$ref": "../responses.json#/Forbidden"
+        },
+        "404": {
+          "$ref": "../responses.json#/NotFound"
+        },
+        "500": {
+          "$ref": "../responses.json#/InternalServerError"
+        },
+        "503": {
+          "$ref": "../responses.json#/ServiceUnavailable"
+        }
+      }
+    },
+    "put": {
+      "operationId": "editAccountEntriesUserDimensions",
+      "x-mojo-name": "edit_account_entries_user_dimensions",
+      "x-mojo-to": "AccountEntriesUserDimensions#edit",
+      "summary": "Edits account entries account entries user dimensions dimensions in the system",
+      "security": [
+        { "api_key": [] }
+      ],
+      "x-permissions": {
+        "account_entries_user_dimensions": ["update"]
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../schemas.json#/AccountEntriesUserDimension"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "AccountEntriesUserDimensions edited",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../schemas.json#/AccountEntriesUserDimension"
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "../responses.json#/BadRequest"
+        },
+        "401": {
+          "$ref": "../responses.json#/Unauthorized"
+        },
+        "403": {
+          "$ref": "../responses.json#/Forbidden"
+        },
+        "404": {
+          "$ref": "../responses.json#/NotFound"
+        },
+        "500": {
+          "$ref": "../responses.json#/InternalServerError"
+        },
+        "503": {
+          "$ref": "../responses.json#/ServiceUnavailable"
+        }
+      }
+    },
+    "delete": {
+      "operationId": "deleteAccountEntriesUserDimensions",
+      "x-mojo-name": "delete_account_entries_user_dimensions",
+      "x-mojo-to": "AccountEntriesUserDimensions#delete",
+      "summary": "Deletes account entries account entries user dimensions dimensions in the system",
+      "security": [
+        { "api_key": [] }
+      ],
+      "x-permissions": {
+        "account_entries_user_dimensions": ["delete"]
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "responses": {
+        "204": {
+          "description": "AccountEntriesUserDimensions deleted",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "../responses.json#/BadRequest"
+        },
+        "401": {
+          "$ref": "../responses.json#/Unauthorized"
+        },
+        "403": {
+          "$ref": "../responses.json#/Forbidden"
+        },
+        "404": {
+          "$ref": "../responses.json#/NotFound"
+        },
+        "500": {
+          "$ref": "../responses.json#/InternalServerError"
+        },
+        "503": {
+          "$ref": "../responses.json#/ServiceUnavailable"
+        }
+      }
+    }
+  },
+  "/account/entries/user/dimensions/expanded": {
+    "get": {
+      "operationId": "listExpandedAccountEntriesUserDimensions",
+      "x-mojo-name": "list_expanded_account_entries_user_dimensions",
+      "x-mojo-to": "AccountEntriesUserDimensions#expanded",
+      "summary": "Finds account entries user dimensions in the system",
+      "security": [
+        { "api_key": [] }
+      ],
+      "x-permissions": {
+        "account_entries_user_dimensions": ["read"]
+      },
+      "parameters": [
+        {
+          "in": "query",
+          "name": "user_id",
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "in": "query",
+          "name": "date_start",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "query",
+          "name": "date_end",
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "AccountEntriesUserDimensions response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "records": {
+                    "type": "array",
+                    "items": {
+                      "schema": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "../responses.json#/BadRequest"
+        },
+        "401": {
+          "$ref": "../responses.json#/Unauthorized"
+        },
+        "403": {
+          "$ref": "../responses.json#/Forbidden"
+        },
+        "500": {
+          "$ref": "../responses.json#/InternalServerError"
+        },
+        "503": {
+          "$ref": "../responses.json#/ServiceUnavailable"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,136 @@
+% layout 'default';
+% title 'Editor';
+<link rel="stylesheet" type="text/css" href="/css/datatables.min.css"></link>
+<style type="text/css">
+button.product_edit, button.product_delete {
+  margin: 0 5px;
+}
+</style>
+<h2>Products</h2>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg" style="padding:30px;">
+      <h3>Create or modify product</h3>
+      <p id="modifying_notification" class="text-warning" style="display:none">Modifying <span id="modifying_product_name"></span> <a href="#" id="cancel_edit">(Cancel)</a></a></p>
+      <label for="Name">Name</label>
+      <input type="text" id="product_name" />
+      <input type="hidden" id="product_id" />
+      <button id="product-submit" class="btn btn-primary">Submit</button>
+    </div>
+  </div>
+<table id="table_products" class="table table-striped table-bordered" style="width:100%">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tfoot>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Actions</th>
+    </tr>
+  </tfoot>
+</table>
+</div>
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/js/datatables.min.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+$(document).ready(function() {
+    var table_products = $('#table_products').DataTable( {
+        "ajax": {
+          url: "/api/products",
+          beforeSend: function (req) {
+            addAuthenticationHeaders(req);
+          },
+          dataSrc: "records"
+        },
+        "columns": [
+            { "data": "id" },
+            { "data": "name" },
+            {
+                data: null,
+                className:      'center',
+                defaultContent: '<button class="product_edit btn btn-warning">Edit</button><button class="product_delete btn btn-danger">Delete</button>'
+            }
+        ]
+    } );
+
+    $('#table_products').on('click', 'button.product_edit', function (e) {
+      var tr = $(this).closest('tr');
+      var row = table_products.row( tr );
+      var product_id = row.data()["id"];
+      var product_name = row.data()["name"];
+      $("p#modifying_notification").css("display", "block");
+      $("span#modifying_product_name").html('"'+product_name+'"')
+      $("input#product_id").val(product_id);
+      $("input#product_name").val(product_name);
+    });
+
+    $('#table_products').on('click', 'button.product_delete', function (e) {
+      var tr = $(this).closest('tr');
+      var row = table_products.row( tr );
+      var product_id = row.data()["id"];
+      var product_name = row.data()["name"];
+      var r = confirm('Do you really want to delete product "' + product_name + '"');
+      if (!r) {
+        return 0;
+      }
+      $.ajax({
+        url: "/api/products/" + product_id,
+        method: "DELETE",
+        dataType: "json",
+        contentType: "application/json",
+        beforeSend: function (req) {
+          addAuthenticationHeaders(req);
+        }
+      }).done(function(d) {
+          table_products.ajax.reload(null,false);
+      }).fail(function(data) {
+        alert("failed: " + JSON.stringify(data));
+      });
+    });
+
+    $('a#cancel_edit').on('click', function (e) {
+      reset_create_form();
+    });
+
+    $('button#product-submit').on('click', function (e) {
+      var json_data = {};
+      json_data["name"] = $("input#product_name").val();
+      var method = "POST";
+      var url = "/api/products"
+      if ($("input#product_id").val()) {
+        method = "PUT";
+        url += "/" + $("input#product_id").val();
+        json_data["id"] = $("input#product_id").val();
+      }
+      $.ajax({
+        url: url,
+        method: method,
+        dataType: "json",
+        contentType: "application/json",
+        data: JSON.stringify(json_data),
+        beforeSend: function (req) {
+          addAuthenticationHeaders(req);
+        }
+      }).done(function(d) {
+          table_products.ajax.reload(null,false);
+      }).fail(function(data) {
+        alert("failed: " + JSON.stringify(data));
+      });
+      reset_create_form();
+    });
+} );
+
+function reset_create_form() {
+    $("p#modifying_notification").css("display", "none");
+    $("span#modifying_product_name").html("");
+    $("input#product_name").val("");
+    $("input#product_id").val("");
+}
+/* ]]> */
+</script>

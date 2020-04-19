@@ -1,0 +1,281 @@
+{
+  "/users/permissions": {
+    "get": {
+      "operationId": "listUserPermissions",
+      "x-mojo-name": "list_users_permissionss_permissions",
+      "x-mojo-to": "UsersPermissions#list",
+      "summary": "Finds users permissions in the system",
+      "security": [
+        { "api_key": [] }
+      ],
+      "x-permissions": {
+        "users_permissions": ["read"]
+      },
+      "parameters": [
+        {
+          "in": "query",
+          "name": "user_id",
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "in": "query",
+          "name": "permission_id",
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "UserPermissions response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "records": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "../schemas.json#/UsersPermission"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "../responses.json#/BadRequest"
+        },
+        "401": {
+          "$ref": "../responses.json#/Unauthorized"
+        },
+        "403": {
+          "$ref": "../responses.json#/Forbidden"
+        },
+        "500": {
+          "$ref": "../responses.json#/InternalServerError"
+        },
+        "503": {
+          "$ref": "../responses.json#/ServiceUnavailable"
+        }
+      }
+    },
+    "post": {
+      "operationId": "addUserPermissions",
+      "x-mojo-name": "add_users_permissions",
+      "x-mojo-to": "UsersPermissions#add",
+      "summary": "Adds users permissions permissions into the system",
+      "security": [
+        { "api_key": [] }
+      ],
+      "x-permissions": {
+        "users_permissions": ["create"]
+      },
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../schemas.json#/UsersPermission"
+            }
+          }
+        }
+      },
+      "responses": {
+        "201": {
+          "description": "UsersPermissions created",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../schemas.json#/UsersPermission"
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "../responses.json#/BadRequest"
+        },
+        "401": {
+          "$ref": "../responses.json#/Unauthorized"
+        },
+        "403": {
+          "$ref": "../responses.json#/Forbidden"
+        },
+        "500": {
+          "$ref": "../responses.json#/InternalServerError"
+        },
+        "503": {
+          "$ref": "../responses.json#/ServiceUnavailable"
+        }
+      }
+    }
+  },
+  "/users/permissions/{id}": {
+    "get": {
+      "operationId": "getUserPermissions",
+      "x-mojo-name": "get_users_permissions",
+      "x-mojo-to": "UsersPermissions#get",
+      "summary": "Finds users permissions in the system",
+      "security": [
+        { "api_key": [] }
+      ],
+      "x-permissions": {
+        "users_permissions": ["read"]
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "UsersPermissions response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../schemas.json#/UsersPermission"
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "../responses.json#/BadRequest"
+        },
+        "401": {
+          "$ref": "../responses.json#/Unauthorized"
+        },
+        "403": {
+          "$ref": "../responses.json#/Forbidden"
+        },
+        "404": {
+          "$ref": "../responses.json#/NotFound"
+        },
+        "500": {
+          "$ref": "../responses.json#/InternalServerError"
+        },
+        "503": {
+          "$ref": "../responses.json#/ServiceUnavailable"
+        }
+      }
+    },
+    "put": {
+      "operationId": "editUserPermissions",
+      "x-mojo-name": "edit_users_permissions",
+      "x-mojo-to": "UsersPermissions#edit",
+      "summary": "Edits users permissions permissions in the system",
+      "security": [
+        { "api_key": [] }
+      ],
+      "x-permissions": {
+        "users_permissions": ["update"]
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../schemas.json#/UsersPermission"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "UsersPermissions edited",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../schemas.json#/UsersPermission"
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "../responses.json#/BadRequest"
+        },
+        "401": {
+          "$ref": "../responses.json#/Unauthorized"
+        },
+        "403": {
+          "$ref": "../responses.json#/Forbidden"
+        },
+        "404": {
+          "$ref": "../responses.json#/NotFound"
+        },
+        "500": {
+          "$ref": "../responses.json#/InternalServerError"
+        },
+        "503": {
+          "$ref": "../responses.json#/ServiceUnavailable"
+        }
+      }
+    },
+    "delete": {
+      "operationId": "deleteUserPermissions",
+      "x-mojo-name": "delete_users_permissions",
+      "x-mojo-to": "UsersPermissions#delete",
+      "summary": "Deletes users permissions permissions in the system",
+      "security": [
+        { "api_key": [] }
+      ],
+      "x-permissions": {
+        "users_permissions": ["delete"]
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "responses": {
+        "204": {
+          "description": "UsersPermissions deleted",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "../responses.json#/BadRequest"
+        },
+        "401": {
+          "$ref": "../responses.json#/Unauthorized"
+        },
+        "403": {
+          "$ref": "../responses.json#/Forbidden"
+        },
+        "404": {
+          "$ref": "../responses.json#/NotFound"
+        },
+        "500": {
+          "$ref": "../responses.json#/InternalServerError"
+        },
+        "503": {
+          "$ref": "../responses.json#/ServiceUnavailable"
+        }
+      }
+    }
+  }
+}

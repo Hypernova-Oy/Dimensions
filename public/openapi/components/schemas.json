@@ -1,0 +1,38 @@
+{
+  "Errors": {
+    "$ref": "schemas/Errors.json"
+  },
+  "AccountEntry": {
+    "$ref": "schemas/AccountEntry.json"
+  },
+  "PermissionsCategory": {
+    "$ref": "schemas/PermissionsCategory.json"
+  },
+  "Permission": {
+    "$ref": "schemas/Permission.json"
+  },
+  "AccountEntriesProductDimension": {
+    "$ref": "schemas/AccountEntriesProductDimension.json"
+  },
+  "Account": {
+    "$ref": "schemas/Account.json"
+  },
+  "AccountEntriesUserDimension": {
+    "$ref": "schemas/AccountEntriesUserDimension.json"
+  },
+  "EventLog": {
+    "$ref": "schemas/EventLog.json"
+  },
+  "UsersPermission": {
+    "$ref": "schemas/UsersPermission.json"
+  },
+  "User": {
+    "$ref": "schemas/User.json"
+  },
+  "ApiKey": {
+    "$ref": "schemas/ApiKey.json"
+  },
+  "Product": {
+    "$ref": "schemas/Product.json"
+  }
+}

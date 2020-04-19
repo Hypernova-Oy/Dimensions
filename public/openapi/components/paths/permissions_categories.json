@@ -1,0 +1,295 @@
+{
+  "/permissions/categories": {
+    "get": {
+      "operationId": "listPermissionsCategories",
+      "x-mojo-name": "list_permissions_categories",
+      "x-mojo-to": "PermissionsCategories#list",
+      "summary": "Finds permissions categories in the system",
+      "security": [
+        { "api_key": [] }
+      ],
+      "x-permissions": {
+        "permissions_categories": ["read"]
+      },
+      "parameters": [
+        {
+          "in": "query",
+          "name": "username",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "query",
+          "name": "password",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "query",
+          "name": "created_at",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "query",
+          "name": "modified_at",
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "PermissionsCategories response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "records": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "../schemas.json#/PermissionsCategory"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "../responses.json#/BadRequest"
+        },
+        "401": {
+          "$ref": "../responses.json#/Unauthorized"
+        },
+        "403": {
+          "$ref": "../responses.json#/Forbidden"
+        },
+        "500": {
+          "$ref": "../responses.json#/InternalServerError"
+        },
+        "503": {
+          "$ref": "../responses.json#/ServiceUnavailable"
+        }
+      }
+    },
+    "post": {
+      "operationId": "addPermissionsCategories",
+      "x-mojo-name": "add_permissions_categories",
+      "x-mojo-to": "PermissionsCategories#add",
+      "summary": "Adds permissions categories into the system",
+      "security": [
+        { "api_key": [] }
+      ],
+      "x-permissions": {
+        "permissions_categories": ["create"]
+      },
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../schemas.json#/PermissionsCategory"
+            }
+          }
+        }
+      },
+      "responses": {
+        "201": {
+          "description": "PermissionsCategories created",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../schemas.json#/PermissionsCategory"
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "../responses.json#/BadRequest"
+        },
+        "401": {
+          "$ref": "../responses.json#/Unauthorized"
+        },
+        "403": {
+          "$ref": "../responses.json#/Forbidden"
+        },
+        "500": {
+          "$ref": "../responses.json#/InternalServerError"
+        },
+        "503": {
+          "$ref": "../responses.json#/ServiceUnavailable"
+        }
+      }
+    }
+  },
+  "/permissions/categories/{id}": {
+    "get": {
+      "operationId": "getPermissionsCategories",
+      "x-mojo-name": "get_permissions_categories",
+      "x-mojo-to": "PermissionsCategories#get",
+      "summary": "Finds permissions categories in the system",
+      "security": [
+        { "api_key": [] }
+      ],
+      "x-permissions": {
+        "permissions_categories": ["read"]
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "PermissionsCategories response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../schemas.json#/PermissionsCategory"
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "../responses.json#/BadRequest"
+        },
+        "401": {
+          "$ref": "../responses.json#/Unauthorized"
+        },
+        "403": {
+          "$ref": "../responses.json#/Forbidden"
+        },
+        "404": {
+          "$ref": "../responses.json#/NotFound"
+        },
+        "500": {
+          "$ref": "../responses.json#/InternalServerError"
+        },
+        "503": {
+          "$ref": "../responses.json#/ServiceUnavailable"
+        }
+      }
+    },
+    "put": {
+      "operationId": "editPermissionsCategories",
+      "x-mojo-name": "edit_permissions_categories",
+      "x-mojo-to": "PermissionsCategories#edit",
+      "summary": "Edits permissions categories in the system",
+      "security": [
+        { "api_key": [] }
+      ],
+      "x-permissions": {
+        "permissions_categories": ["update"]
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../schemas.json#/PermissionsCategory"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "PermissionsCategories edited",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../schemas.json#/PermissionsCategory"
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "../responses.json#/BadRequest"
+        },
+        "401": {
+          "$ref": "../responses.json#/Unauthorized"
+        },
+        "403": {
+          "$ref": "../responses.json#/Forbidden"
+        },
+        "404": {
+          "$ref": "../responses.json#/NotFound"
+        },
+        "500": {
+          "$ref": "../responses.json#/InternalServerError"
+        },
+        "503": {
+          "$ref": "../responses.json#/ServiceUnavailable"
+        }
+      }
+    },
+    "delete": {
+      "operationId": "deletePermissionsCategories",
+      "x-mojo-name": "delete_permissions_categories",
+      "x-mojo-to": "PermissionsCategories#delete",
+      "summary": "Deletes permissions categories in the system",
+      "security": [
+        { "api_key": [] }
+      ],
+      "x-permissions": {
+        "permissions_categories": ["delete"]
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "responses": {
+        "204": {
+          "description": "PermissionsCategories deleted",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "../responses.json#/BadRequest"
+        },
+        "401": {
+          "$ref": "../responses.json#/Unauthorized"
+        },
+        "403": {
+          "$ref": "../responses.json#/Forbidden"
+        },
+        "404": {
+          "$ref": "../responses.json#/NotFound"
+        },
+        "500": {
+          "$ref": "../responses.json#/InternalServerError"
+        },
+        "503": {
+          "$ref": "../responses.json#/ServiceUnavailable"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "BadRequest": {
+    "description": "The given user input was rejected",
+    "content": {
+      "application/json": {
+        "schema": {
+          "$ref": "schemas.json#/Errors"
+        }
+      }
+    }
+  },
+  "Unauthorized": {
+    "description": "Resource requires authentication but none was provided",
+    "content": {
+      "application/json": {
+        "schema": {
+          "$ref": "schemas.json#/Errors"
+        }
+      }
+    }
+  },
+  "Forbidden": {
+    "description": "User does not have sufficient permissions to access this resource",
+    "content": {
+      "application/json": {
+        "schema": {
+          "$ref": "schemas.json#/Errors"
+        }
+      }
+    }
+  },
+  "NotFound": {
+    "description": "The specified resource was not found",
+    "content": {
+      "application/json": {
+        "schema": {
+          "$ref": "schemas.json#/Errors"
+        }
+      }
+    }
+  },
+  "InternalServerError": {
+    "description": "Something went wrong. Contact administrator.",
+    "content": {
+      "application/json": {
+        "schema": {
+          "$ref": "schemas.json#/Errors"
+        }
+      }
+    }
+  },
+  "ServiceUnavailable": {
+    "description": "Service is unavailable, likely due to maintenance. Try again later.",
+    "content": {
+      "application/json": {
+        "schema": {
+          "$ref": "schemas.json#/Errors"
+        }
+      }
+    }
+  }
+}

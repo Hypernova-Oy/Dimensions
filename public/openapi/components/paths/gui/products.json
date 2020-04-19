@@ -1,0 +1,37 @@
+{
+  "/gui/products": {
+    "get": {
+      "operationId": "productsGUI",
+      "x-mojo-name": "products_gui",
+      "x-mojo-to": "GUI::Products#index",
+      "summary": "Show products GUI",
+      "responses": {
+        "200": {
+          "description": "Products GUI response",
+          "content": {
+            "text/html": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "../../responses.json#/BadRequest"
+        },
+        "401": {
+          "$ref": "../../responses.json#/Unauthorized"
+        },
+        "403": {
+          "$ref": "../../responses.json#/Forbidden"
+        },
+        "500": {
+          "$ref": "../../responses.json#/InternalServerError"
+        },
+        "503": {
+          "$ref": "../../responses.json#/ServiceUnavailable"
+        }
+      }
+    }
+  }
+}

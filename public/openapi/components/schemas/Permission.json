@@ -1,0 +1,14 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "permission_category_id": {
+      "type": "integer"
+    },
+    "id": {
+      "type": "integer"
+    }
+  }
+}

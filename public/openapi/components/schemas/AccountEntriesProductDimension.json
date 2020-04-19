@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer"
+    },
+    "amount": {
+      "type": "number"
+    },
+    "product_id": {
+      "type": "integer"
+    },
+    "account_entry_id": {
+      "type": "integer"
+    }
+  }
+}

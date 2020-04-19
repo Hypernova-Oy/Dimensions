@@ -1,0 +1,354 @@
+{
+  "/products": {
+    "get": {
+      "operationId": "listProducts",
+      "x-mojo-name": "list_products",
+      "x-mojo-to": "Products#list",
+      "summary": "Finds products in the system",
+      "security": [
+        { "api_key": [] }
+      ],
+      "x-permissions": {
+        "products": ["read"]
+      },
+      "parameters": [
+        {
+          "in": "query",
+          "name": "username",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "query",
+          "name": "password",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "query",
+          "name": "created_at",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "query",
+          "name": "modified_at",
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Products response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "records": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "../schemas.json#/Product"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "../responses.json#/BadRequest"
+        },
+        "401": {
+          "$ref": "../responses.json#/Unauthorized"
+        },
+        "403": {
+          "$ref": "../responses.json#/Forbidden"
+        },
+        "500": {
+          "$ref": "../responses.json#/InternalServerError"
+        },
+        "503": {
+          "$ref": "../responses.json#/ServiceUnavailable"
+        }
+      }
+    },
+    "post": {
+      "operationId": "addProducts",
+      "x-mojo-name": "add_products",
+      "x-mojo-to": "Products#add",
+      "summary": "Adds products into the system",
+      "security": [
+        { "api_key": [] }
+      ],
+      "x-permissions": {
+        "products": ["create"]
+      },
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../schemas.json#/Product"
+            }
+          }
+        }
+      },
+      "responses": {
+        "201": {
+          "description": "Products created",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../schemas.json#/Product"
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "../responses.json#/BadRequest"
+        },
+        "401": {
+          "$ref": "../responses.json#/Unauthorized"
+        },
+        "403": {
+          "$ref": "../responses.json#/Forbidden"
+        },
+        "500": {
+          "$ref": "../responses.json#/InternalServerError"
+        },
+        "503": {
+          "$ref": "../responses.json#/ServiceUnavailable"
+        }
+      }
+    }
+  },
+  "/products/{id}": {
+    "get": {
+      "operationId": "getProducts",
+      "x-mojo-name": "get_products",
+      "x-mojo-to": "Products#get",
+      "summary": "Finds products in the system",
+      "security": [
+        { "api_key": [] }
+      ],
+      "x-permissions": {
+        "products": ["read"]
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Products response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../schemas.json#/Product"
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "../responses.json#/BadRequest"
+        },
+        "401": {
+          "$ref": "../responses.json#/Unauthorized"
+        },
+        "403": {
+          "$ref": "../responses.json#/Forbidden"
+        },
+        "404": {
+          "$ref": "../responses.json#/NotFound"
+        },
+        "500": {
+          "$ref": "../responses.json#/InternalServerError"
+        },
+        "503": {
+          "$ref": "../responses.json#/ServiceUnavailable"
+        }
+      }
+    },
+    "put": {
+      "operationId": "editProducts",
+      "x-mojo-name": "edit_products",
+      "x-mojo-to": "Products#edit",
+      "summary": "Edits products in the system",
+      "security": [
+        { "api_key": [] }
+      ],
+      "x-permissions": {
+        "products": ["update"]
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../schemas.json#/Product"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Products edited",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../schemas.json#/Product"
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "../responses.json#/BadRequest"
+        },
+        "401": {
+          "$ref": "../responses.json#/Unauthorized"
+        },
+        "403": {
+          "$ref": "../responses.json#/Forbidden"
+        },
+        "404": {
+          "$ref": "../responses.json#/NotFound"
+        },
+        "500": {
+          "$ref": "../responses.json#/InternalServerError"
+        },
+        "503": {
+          "$ref": "../responses.json#/ServiceUnavailable"
+        }
+      }
+    },
+    "delete": {
+      "operationId": "deleteProducts",
+      "x-mojo-name": "delete_products",
+      "x-mojo-to": "Products#delete",
+      "summary": "Deletes products in the system",
+      "security": [
+        { "api_key": [] }
+      ],
+      "x-permissions": {
+        "products": ["delete"]
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "responses": {
+        "204": {
+          "description": "Products deleted",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "../responses.json#/BadRequest"
+        },
+        "401": {
+          "$ref": "../responses.json#/Unauthorized"
+        },
+        "403": {
+          "$ref": "../responses.json#/Forbidden"
+        },
+        "404": {
+          "$ref": "../responses.json#/NotFound"
+        },
+        "500": {
+          "$ref": "../responses.json#/InternalServerError"
+        },
+        "503": {
+          "$ref": "../responses.json#/ServiceUnavailable"
+        }
+      }
+    }
+  },
+  "/products/dimensions": {
+    "get": {
+      "operationId": "productDimensions",
+      "x-mojo-name": "product_dimensions",
+      "x-mojo-to": "Products#dimensions",
+      "summary": "Get products dimensions",
+      "parameters": [
+        {
+          "in": "query",
+          "name": "date_start",
+          "schema": {
+            "type": "string",
+            "format": "date"
+          }
+        },
+        {
+          "in": "query",
+          "name": "date_end",
+          "schema": {
+            "type": "string",
+            "format": "date"
+          }
+        }
+      ],
+      "security": [
+        { "api_key": [] }
+      ],
+      "x-permissions": {
+        "account_entries_product_dimensions": ["read"]
+      },
+      "responses": {
+        "200": {
+          "description": "Dimensions response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "../responses.json#/BadRequest"
+        },
+        "401": {
+          "$ref": "../responses.json#/Unauthorized"
+        },
+        "403": {
+          "$ref": "../responses.json#/Forbidden"
+        },
+        "500": {
+          "$ref": "../responses.json#/InternalServerError"
+        },
+        "503": {
+          "$ref": "../responses.json#/ServiceUnavailable"
+        }
+      }
+    }
+  }
+}

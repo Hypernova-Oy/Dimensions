@@ -1,0 +1,125 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "version": "1.0",
+    "title": "Hypernova Dimensions API"
+  },
+  "paths": {
+    "/account/entries": {
+      "$ref": "openapi/components/paths/account_entries.json#/~1account~1entries"
+    },
+    "/account/entries/{id}": {
+      "$ref": "openapi/components/paths/account_entries.json#/~1account~1entries~1{id}"
+    },
+    "/permissions/categories": {
+      "$ref": "openapi/components/paths/permissions_categories.json#/~1permissions~1categories"
+    },
+    "/permissions/categories/{id}": {
+      "$ref": "openapi/components/paths/permissions_categories.json#/~1permissions~1categories~1{id}"
+    },
+    "/permissions": {
+      "$ref": "openapi/components/paths/permissions.json#/~1permissions"
+    },
+    "/permissions/{id}": {
+      "$ref": "openapi/components/paths/permissions.json#/~1permissions~1{id}"
+    },
+    "/account/entries/product/dimensions": {
+      "$ref": "openapi/components/paths/account_entries_product_dimensions.json#/~1account~1entries~1product~1dimensions"
+    },
+    "/account/entries/product/dimensions/{id}": {
+      "$ref": "openapi/components/paths/account_entries_product_dimensions.json#/~1account~1entries~1product~1dimensions~1{id}"
+    },
+    "/account/entries/product/dimensions/expanded": {
+      "$ref": "openapi/components/paths/account_entries_product_dimensions.json#/~1account~1entries~1product~1dimensions~1expanded"
+    },
+    "/accounts": {
+      "$ref": "openapi/components/paths/accounts.json#/~1accounts"
+    },
+    "/accounts/{id}": {
+      "$ref": "openapi/components/paths/accounts.json#/~1accounts~1{id}"
+    },
+    "/account/entries/user/dimensions": {
+      "$ref": "openapi/components/paths/account_entries_user_dimensions.json#/~1account~1entries~1user~1dimensions"
+    },
+    "/account/entries/user/dimensions/{id}": {
+      "$ref": "openapi/components/paths/account_entries_user_dimensions.json#/~1account~1entries~1user~1dimensions~1{id}"
+    },
+    "/account/entries/user/dimensions/expanded": {
+      "$ref": "openapi/components/paths/account_entries_user_dimensions.json#/~1account~1entries~1user~1dimensions~1expanded"
+    },
+    "/gui/editor": {
+      "$ref": "openapi/components/paths/gui/editor.json#/~1gui~1editor"
+    },
+    "/gui/editor/datatable/content": {
+      "$ref": "openapi/components/paths/gui/editor.json#/~1gui~1editor~1datatable~1content"
+    },
+    "/gui/event/log": {
+      "$ref": "openapi/components/paths/gui/eventlog.json#/~1gui~1event~1log"
+    },
+    "/gui/dimensions/products": {
+      "$ref": "openapi/components/paths/gui/dimensions.json#/~1gui~1dimensions~1products"
+    },
+    "/gui/dimensions/users": {
+      "$ref": "openapi/components/paths/gui/dimensions.json#/~1gui~1dimensions~1users"
+    },
+    "/gui/products": {
+      "$ref": "openapi/components/paths/gui/products.json#/~1gui~1products"
+    },
+    "/gui/users": {
+      "$ref": "openapi/components/paths/gui/users.json#/~1gui~1users"
+    },
+    "/event/log": {
+      "$ref": "openapi/components/paths/event_log.json#/~1event~1log"
+    },
+    "/event/log/{id}": {
+      "$ref": "openapi/components/paths/event_log.json#/~1event~1log~1{id}"
+    },
+    "/users/permissions": {
+      "$ref": "openapi/components/paths/users_permissions.json#/~1users~1permissions"
+    },
+    "/users/permissions/{id}": {
+      "$ref": "openapi/components/paths/users_permissions.json#/~1users~1permissions~1{id}"
+    },
+    "/users": {
+      "$ref": "openapi/components/paths/users.json#/~1users"
+    },
+    "/users/{id}": {
+      "$ref": "openapi/components/paths/users.json#/~1users~1{id}"
+    },
+    "/users/dimensions": {
+      "$ref": "openapi/components/paths/users.json#/~1users~1dimensions"
+    },
+    "/keys": {
+      "$ref": "openapi/components/paths/api_keys.json#/~1keys"
+    },
+    "/keys/{id}": {
+      "$ref": "openapi/components/paths/api_keys.json#/~1keys~1{id}"
+    },
+    "/products": {
+      "$ref": "openapi/components/paths/products.json#/~1products"
+    },
+    "/products/{id}": {
+      "$ref": "openapi/components/paths/products.json#/~1products~1{id}"
+    },
+    "/products/dimensions": {
+      "$ref": "openapi/components/paths/products.json#/~1products~1dimensions"
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "api_key": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-API-KEY"
+      }
+    }
+  },
+  "security": [
+    { "api_key": [] }
+  ],
+  "servers": [
+    {
+      "url": "/api"
+    }
+  ]
+}

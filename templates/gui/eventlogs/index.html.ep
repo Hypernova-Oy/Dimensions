@@ -1,0 +1,81 @@
+% layout 'default';
+% title 'Editor';
+<link rel="stylesheet" type="text/css" href="/css/datatables.min.css"></link>
+<h2>Event log</h2>
+<div class="container-fluid">
+<table id="table_eventlog" class="table table-striped table-bordered" style="width:100%">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Username</th>
+      <th>Target</th>
+      <th>Event</th>
+      <th>Description</th>
+      <th>Created</th>
+    </tr>
+  </thead>
+  <tfoot>
+    <tr>
+      <th>ID</th>
+      <th>Username</th>
+      <th>Target</th>
+      <th>Event</th>
+      <th>Description</th>
+      <th>Created</th>
+    </tr>
+  </tfoot>
+</table>
+</div>
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/js/datatables.min.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+$(document).ready(function() {
+    $.ajax({
+      url: "/api/users",
+      dataType: "json",
+      beforeSend: function (req) {
+        addAuthenticationHeaders(req);
+      },
+    }).done(function(d) {
+        for (var i=0; i<d.records.length;i++) {
+            users[d.records[i].id] = d.records[i].username;
+        }
+    }).fail(function(data) {
+      alert("failed: " + JSON.stringify(data));
+    });
+
+    var table_eventlog = $('#table_eventlog').DataTable( {
+        "ajax": {
+          url: "/api/event/log",
+          beforeSend: function (req) {
+            addAuthenticationHeaders(req);
+          },
+          dataSrc: "records"
+        },
+        "columns": [
+            { "data": "id" },
+            { "data": "user_id" },
+            { "data": "target"},
+            { "data": "event"},
+            { "data": "description"},
+            { "data": "created_at"}
+        ],
+        "initComplete": function(settings, json) {
+          table_eventlog
+          .rows( function ( idx, data, node ) {
+              if (data["target"] && data["target"].lastIndexOf('nonce_', 0) === 0) {
+                return 1;
+              }
+              if (data["event"] === "GET") {
+                return 1;
+              }
+          } )
+          .remove()
+          .draw();
+        }
+    } );
+} );
+
+var users = {};
+</script>

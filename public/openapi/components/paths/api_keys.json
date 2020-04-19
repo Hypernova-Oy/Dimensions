@@ -1,0 +1,295 @@
+{
+  "/keys": {
+    "get": {
+      "operationId": "listApiKeys",
+      "x-mojo-name": "list_api_keys",
+      "x-mojo-to": "ApiKeys#list",
+      "summary": "Finds api keys in the system",
+      "security": [
+        { "api_key": [] }
+      ],
+      "x-permissions": {
+        "api_keys": ["read"]
+      },
+      "parameters": [
+        {
+          "in": "query",
+          "name": "id",
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "in": "query",
+          "name": "api_key",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "query",
+          "name": "api_secret",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "query",
+          "name": "active",
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "ApiKeys response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "records": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "../schemas.json#/ApiKey"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "../responses.json#/BadRequest"
+        },
+        "401": {
+          "$ref": "../responses.json#/Unauthorized"
+        },
+        "403": {
+          "$ref": "../responses.json#/Forbidden"
+        },
+        "500": {
+          "$ref": "../responses.json#/InternalServerError"
+        },
+        "503": {
+          "$ref": "../responses.json#/ServiceUnavailable"
+        }
+      }
+    },
+    "post": {
+      "operationId": "addApiKeys",
+      "x-mojo-name": "add_api_keys",
+      "x-mojo-to": "ApiKeys#add",
+      "summary": "Adds api keys into the system",
+      "security": [
+        { "api_key": [] }
+      ],
+      "x-permissions": {
+        "api_keys": ["create"]
+      },
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../schemas.json#/ApiKey"
+            }
+          }
+        }
+      },
+      "responses": {
+        "201": {
+          "description": "ApiKeys created",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../schemas.json#/ApiKey"
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "../responses.json#/BadRequest"
+        },
+        "401": {
+          "$ref": "../responses.json#/Unauthorized"
+        },
+        "403": {
+          "$ref": "../responses.json#/Forbidden"
+        },
+        "500": {
+          "$ref": "../responses.json#/InternalServerError"
+        },
+        "503": {
+          "$ref": "../responses.json#/ServiceUnavailable"
+        }
+      }
+    }
+  },
+  "/keys/{id}": {
+    "get": {
+      "operationId": "getApiKeys",
+      "x-mojo-name": "get_api_keys",
+      "x-mojo-to": "ApiKeys#get",
+      "summary": "Finds api keys in the system",
+      "security": [
+        { "api_key": [] }
+      ],
+      "x-permissions": {
+        "api_keys": ["read"]
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "ApiKeys response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../schemas.json#/ApiKey"
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "../responses.json#/BadRequest"
+        },
+        "401": {
+          "$ref": "../responses.json#/Unauthorized"
+        },
+        "403": {
+          "$ref": "../responses.json#/Forbidden"
+        },
+        "404": {
+          "$ref": "../responses.json#/NotFound"
+        },
+        "500": {
+          "$ref": "../responses.json#/InternalServerError"
+        },
+        "503": {
+          "$ref": "../responses.json#/ServiceUnavailable"
+        }
+      }
+    },
+    "put": {
+      "operationId": "editApiKeys",
+      "x-mojo-name": "edit_api_keys",
+      "x-mojo-to": "ApiKeys#edit",
+      "summary": "Edits api keys in the system",
+      "security": [
+        { "api_key": [] }
+      ],
+      "x-permissions": {
+        "api_keys": ["update"]
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../schemas.json#/ApiKey"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "ApiKeys edited",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../schemas.json#/ApiKey"
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "../responses.json#/BadRequest"
+        },
+        "401": {
+          "$ref": "../responses.json#/Unauthorized"
+        },
+        "403": {
+          "$ref": "../responses.json#/Forbidden"
+        },
+        "404": {
+          "$ref": "../responses.json#/NotFound"
+        },
+        "500": {
+          "$ref": "../responses.json#/InternalServerError"
+        },
+        "503": {
+          "$ref": "../responses.json#/ServiceUnavailable"
+        }
+      }
+    },
+    "delete": {
+      "operationId": "deleteApiKeys",
+      "x-mojo-name": "delete_api_keys",
+      "x-mojo-to": "ApiKeys#delete",
+      "summary": "Deletes api keys in the system",
+      "security": [
+        { "api_key": [] }
+      ],
+      "x-permissions": {
+        "api_keys": ["delete"]
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "responses": {
+        "204": {
+          "description": "ApiKeys deleted",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "../responses.json#/BadRequest"
+        },
+        "401": {
+          "$ref": "../responses.json#/Unauthorized"
+        },
+        "403": {
+          "$ref": "../responses.json#/Forbidden"
+        },
+        "404": {
+          "$ref": "../responses.json#/NotFound"
+        },
+        "500": {
+          "$ref": "../responses.json#/InternalServerError"
+        },
+        "503": {
+          "$ref": "../responses.json#/ServiceUnavailable"
+        }
+      }
+    }
+  }
+}

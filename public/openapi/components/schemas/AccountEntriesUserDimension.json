@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "amount": {
+      "type": "number"
+    },
+    "id": {
+      "type": "integer"
+    },
+    "user_id": {
+      "type": "integer"
+    },
+    "account_entry_id": {
+      "type": "integer"
+    }
+  }
+}

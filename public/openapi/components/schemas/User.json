@@ -1,0 +1,20 @@
+{
+  "type": "object",
+  "properties": {
+    "modified_at": {
+      "type": "string",
+      "format": "date-time",
+      "nullable": "true"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "username": {
+      "type": "string"
+    },
+    "id": {
+      "type": "integer"
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "/gui/users": {
+    "get": {
+      "operationId": "usersGUI",
+      "x-mojo-name": "users_gui",
+      "x-mojo-to": "GUI::Users#index",
+      "summary": "Show users GUI",
+      "responses": {
+        "200": {
+          "description": "Users GUI response",
+          "content": {
+            "text/html": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "../../responses.json#/BadRequest"
+        },
+        "401": {
+          "$ref": "../../responses.json#/Unauthorized"
+        },
+        "403": {
+          "$ref": "../../responses.json#/Forbidden"
+        },
+        "500": {
+          "$ref": "../../responses.json#/InternalServerError"
+        },
+        "503": {
+          "$ref": "../../responses.json#/ServiceUnavailable"
+        }
+      }
+    }
+  }
+}

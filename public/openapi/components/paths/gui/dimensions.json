@@ -1,0 +1,72 @@
+{
+  "/gui/dimensions/products": {
+    "get": {
+      "operationId": "productDimensionsGUI",
+      "x-mojo-name": "product_dimensions_gui",
+      "x-mojo-to": "GUI::Dimensions#product",
+      "summary": "Show product dimensions GUI",
+      "responses": {
+        "200": {
+          "description": "Dimensions GUI response",
+          "content": {
+            "text/html": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "../../responses.json#/BadRequest"
+        },
+        "401": {
+          "$ref": "../../responses.json#/Unauthorized"
+        },
+        "403": {
+          "$ref": "../../responses.json#/Forbidden"
+        },
+        "500": {
+          "$ref": "../../responses.json#/InternalServerError"
+        },
+        "503": {
+          "$ref": "../../responses.json#/ServiceUnavailable"
+        }
+      }
+    }
+  },
+  "/gui/dimensions/users": {
+    "get": {
+      "operationId": "userDimensionsGUI",
+      "x-mojo-name": "user_dimensions_gui",
+      "x-mojo-to": "GUI::Dimensions#user",
+      "summary": "Show user dimensions GUI",
+      "responses": {
+        "200": {
+          "description": "Dimensions GUI response",
+          "content": {
+            "text/html": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "../../responses.json#/BadRequest"
+        },
+        "401": {
+          "$ref": "../../responses.json#/Unauthorized"
+        },
+        "403": {
+          "$ref": "../../responses.json#/Forbidden"
+        },
+        "500": {
+          "$ref": "../../responses.json#/InternalServerError"
+        },
+        "503": {
+          "$ref": "../../responses.json#/ServiceUnavailable"
+        }
+      }
+    }
+  }
+}

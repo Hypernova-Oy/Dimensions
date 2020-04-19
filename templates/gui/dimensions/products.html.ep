@@ -1,0 +1,133 @@
+% layout 'default';
+% title 'Editor';
+<link rel="stylesheet" type="text/css" href="/css/datatables.min.css"></link>
+<h2>Dimensions - Products</h2>
+<div class="container-fluid">
+<table id="product_results" class="table table-striped table-bordered" style="width:100%">
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>Total</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tfoot>
+    <tr>
+      <th>Product</th>
+      <th>Total</th>
+      <th>Actions</th>
+    </tr>
+  </tfoot>
+</table>
+</div>
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/js/datatables.min.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+$(document).ready(function() {
+    $.ajax({
+      url: "/api/products",
+      dataType: "json",
+      beforeSend: function (req) {
+        addAuthenticationHeaders(req);
+      },
+    }).done(function(d) {
+        for (var i=0; i<d.records.length;i++) {
+            products[d.records[i].id] = d.records[i].name;
+        }
+    }).fail(function(data) {
+      alert("failed: " + JSON.stringify(data));
+    });
+
+    var table_product_results = $('#product_results').DataTable( {
+        "ajax": {
+          url: "/api/products/dimensions",
+          beforeSend: function (req) {
+            addAuthenticationHeaders(req);
+          },
+          dataSrc: "records",
+        },
+        "columns": [
+            { "data": "product_name" },
+            { "data": "total" },
+            {
+                data: null,
+                className:      'center',
+                defaultContent: '<button class="expander btn btn-primary">Expand</button>'
+            }
+        ]
+    } );
+
+    // Add event listener for opening and closing details
+    $('#product_results tbody').on('click', 'button.expander', function (e) {
+        var tr = $(this).closest('tr');
+        var row = table_product_results.row( tr );
+
+        if ( row.child.isShown() ) {
+            // This row is already open - close it
+            row.child.hide();
+            tr.removeClass('shown');
+        }
+        else {
+            // Open this row
+            row.child( format_dimensions(row.data()) ).show();
+            init_product_dt(row.data());
+            tr.addClass('shown');
+        }
+    } );
+} );
+
+function format_dimensions ( d ) {
+    // `d` is the original data object for the row
+
+    var dimensions = '<div class="container">';
+
+    dimensions += '<div class="table-responsive"><table class="table" id="product-'+d.product_id+'-table">'+
+            '<thead>'+
+            '<tr class="table-warning">'+
+              '<th>Date</th>'+
+              '<th>Description</th>'+
+              '<th>Total amount</th>'+
+              '<th>User amount</th>'+
+              '<th>Share (%)</th>'+
+            '</tr>'+
+            '</thead>'+
+            '<tbody>'+
+            '</tbody>'+
+            '<tfoot>'+
+            '<tr class="table-warning">'+
+              '<th>Date</th>'+
+              '<th>Description</th>'+
+              '<th>Total amount</th>'+
+              '<th>User amount</th>'+
+              '<th>Share (%)</th>'+
+            '</tr>'+
+            '</tfoot>'+
+          '</table></div>';
+
+    return dimensions;
+}
+
+function init_product_dt(d) {
+    dts.push($('table#product-'+d.product_id+'-table').DataTable( {
+        "ajax": {
+          url: "/api/account/entries/product/dimensions/expanded?product_id="+d.product_id,
+          beforeSend: function (req) {
+            addAuthenticationHeaders(req);
+          },
+          dataSrc: "records.0.entries",
+        },
+        "columns": [
+            { "data": "date" },
+            { "data": "description" },
+            { "data": "total_amount" },
+            { "data": "product_amount" },
+            { "data": "share" },
+        ]
+    } ));
+}
+
+var products = {};
+var dts = [];
+/* ]]> */
+</script>

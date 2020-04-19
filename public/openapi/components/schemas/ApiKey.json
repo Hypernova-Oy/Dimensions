@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer"
+    },
+    "user_id": {
+      "type": "integer"
+    },
+    "api_key": {
+      "type": "string"
+    },
+    "api_secret": {
+      "type": "string"
+    },
+    "active": {
+      "type": "integer",
+      "nullable": "true"
+    }
+  }
+}

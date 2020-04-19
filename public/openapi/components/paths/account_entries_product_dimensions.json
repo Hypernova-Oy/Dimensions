@@ -1,0 +1,369 @@
+{
+  "/account/entries/product/dimensions": {
+    "get": {
+      "operationId": "listAccountEntriesProductDimensions",
+      "x-mojo-name": "list_account_entries_product_dimensions",
+      "x-mojo-to": "AccountEntriesProductDimensions#list",
+      "summary": "Finds account entries product dimensions in the system",
+      "security": [
+        { "api_key": [] }
+      ],
+      "x-permissions": {
+        "account_entries_product_dimensions": ["read"]
+      },
+      "parameters": [
+        {
+          "in": "query",
+          "name": "username",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "query",
+          "name": "password",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "query",
+          "name": "created_at",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "query",
+          "name": "modified_at",
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "AccountEntriesProductDimensions response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "records": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "../schemas.json#/AccountEntriesProductDimension"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "../responses.json#/BadRequest"
+        },
+        "401": {
+          "$ref": "../responses.json#/Unauthorized"
+        },
+        "403": {
+          "$ref": "../responses.json#/Forbidden"
+        },
+        "500": {
+          "$ref": "../responses.json#/InternalServerError"
+        },
+        "503": {
+          "$ref": "../responses.json#/ServiceUnavailable"
+        }
+      }
+    },
+    "post": {
+      "operationId": "addAccountEntriesProductDimensions",
+      "x-mojo-name": "add_account_entries_product_dimensions",
+      "x-mojo-to": "AccountEntriesProductDimensions#add",
+      "summary": "Adds account entries product dimensions into the system",
+      "security": [
+        { "api_key": [] }
+      ],
+      "x-permissions": {
+        "account_entries_product_dimensions": ["create"]
+      },
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../schemas.json#/AccountEntriesProductDimension"
+            }
+          }
+        }
+      },
+      "responses": {
+        "201": {
+          "description": "AccountEntriesProductDimensions created",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../schemas.json#/AccountEntriesProductDimension"
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "../responses.json#/BadRequest"
+        },
+        "401": {
+          "$ref": "../responses.json#/Unauthorized"
+        },
+        "403": {
+          "$ref": "../responses.json#/Forbidden"
+        },
+        "500": {
+          "$ref": "../responses.json#/InternalServerError"
+        },
+        "503": {
+          "$ref": "../responses.json#/ServiceUnavailable"
+        }
+      }
+    }
+  },
+  "/account/entries/product/dimensions/{id}": {
+    "get": {
+      "operationId": "getAccountEntriesProductDimensions",
+      "x-mojo-name": "get_account_entries_product_dimensions",
+      "x-mojo-to": "AccountEntriesProductDimensions#get",
+      "summary": "Finds account entries product dimensions in the system",
+      "security": [
+        { "api_key": [] }
+      ],
+      "x-permissions": {
+        "account_entries_product_dimensions": ["read"]
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "AccountEntriesProductDimensions response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../schemas.json#/AccountEntriesProductDimension"
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "../responses.json#/BadRequest"
+        },
+        "401": {
+          "$ref": "../responses.json#/Unauthorized"
+        },
+        "403": {
+          "$ref": "../responses.json#/Forbidden"
+        },
+        "404": {
+          "$ref": "../responses.json#/NotFound"
+        },
+        "500": {
+          "$ref": "../responses.json#/InternalServerError"
+        },
+        "503": {
+          "$ref": "../responses.json#/ServiceUnavailable"
+        }
+      }
+    },
+    "put": {
+      "operationId": "editAccountEntriesProductDimensions",
+      "x-mojo-name": "edit_account_entries_product_dimensions",
+      "x-mojo-to": "AccountEntriesProductDimensions#edit",
+      "summary": "Edits account entries product dimensions in the system",
+      "security": [
+        { "api_key": [] }
+      ],
+      "x-permissions": {
+        "account_entries_product_dimensions": ["update"]
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../schemas.json#/AccountEntriesProductDimension"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "AccountEntriesProductDimensions edited",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../schemas.json#/AccountEntriesProductDimension"
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "../responses.json#/BadRequest"
+        },
+        "401": {
+          "$ref": "../responses.json#/Unauthorized"
+        },
+        "403": {
+          "$ref": "../responses.json#/Forbidden"
+        },
+        "404": {
+          "$ref": "../responses.json#/NotFound"
+        },
+        "500": {
+          "$ref": "../responses.json#/InternalServerError"
+        },
+        "503": {
+          "$ref": "../responses.json#/ServiceUnavailable"
+        }
+      }
+    },
+    "delete": {
+      "operationId": "deleteAccountEntriesProductDimensions",
+      "x-mojo-name": "delete_account_entries_product_dimensions",
+      "x-mojo-to": "AccountEntriesProductDimensions#delete",
+      "summary": "Deletes account entries product dimensions in the system",
+      "security": [
+        { "api_key": [] }
+      ],
+      "x-permissions": {
+        "account_entries_product_dimensions": ["delete"]
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "responses": {
+        "204": {
+          "description": "AccountEntriesProductDimensions deleted",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "../responses.json#/BadRequest"
+        },
+        "401": {
+          "$ref": "../responses.json#/Unauthorized"
+        },
+        "403": {
+          "$ref": "../responses.json#/Forbidden"
+        },
+        "404": {
+          "$ref": "../responses.json#/NotFound"
+        },
+        "500": {
+          "$ref": "../responses.json#/InternalServerError"
+        },
+        "503": {
+          "$ref": "../responses.json#/ServiceUnavailable"
+        }
+      }
+    }
+  },
+  "/account/entries/product/dimensions/expanded": {
+    "get": {
+      "operationId": "listExpandedAccountEntriesProductDimensions",
+      "x-mojo-name": "list_expanded_account_entries_product_dimensions",
+      "x-mojo-to": "AccountEntriesProductDimensions#expanded",
+      "summary": "Finds account entries product dimensions in the system",
+      "security": [
+        { "api_key": [] }
+      ],
+      "x-permissions": {
+        "account_entries_product_dimensions": ["read"]
+      },
+      "parameters": [
+        {
+          "in": "query",
+          "name": "product_id",
+          "schema": {
+            "type": "integer"
+          }
+        },
+        {
+          "in": "query",
+          "name": "date_start",
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "query",
+          "name": "date_end",
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "AccountEntriesProductDimensions response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "records": {
+                    "type": "array",
+                    "items": {
+                      "schema": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "400": {
+          "$ref": "../responses.json#/BadRequest"
+        },
+        "401": {
+          "$ref": "../responses.json#/Unauthorized"
+        },
+        "403": {
+          "$ref": "../responses.json#/Forbidden"
+        },
+        "500": {
+          "$ref": "../responses.json#/InternalServerError"
+        },
+        "503": {
+          "$ref": "../responses.json#/ServiceUnavailable"
+        }
+      }
+    }
+  }
+}
