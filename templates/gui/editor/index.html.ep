@@ -10,7 +10,7 @@ td > div {
   justify-content: space-between;
 }
 button.dim-mini {
-  width:20%;
+  width:12.5%;
   padding:2px;
   margin:2px;
 }
@@ -127,6 +127,11 @@ $(document).ready(function() {
         var input = el.prevAll('input').first();
         input.val(table.row(el.closest('table').closest('tr').prev()).data().amount);
     });
+    $('#dimensions tbody').on('click', 'button.dimension-90', function (e) {
+        var el = $(this);
+        var input = el.prevAll('input').first();
+        input.val(('%.2f', parseFloat(table.row(el.closest('table').closest('tr').prev()).data().amount)*0.9).toFixed(2));
+    });
     $('#dimensions tbody').on('click', 'button.dimension-half', function (e) {
         var el = $(this);
         var input = el.prevAll('input').first();
@@ -141,6 +146,11 @@ $(document).ready(function() {
         var el = $(this);
         var input = el.prevAll('input').first();
         input.val(('%.2f', parseFloat(table.row(el.closest('table').closest('tr').prev()).data().amount)/4).toFixed(2));
+    });
+    $('#dimensions tbody').on('click', 'button.dimension-ten', function (e) {
+        var el = $(this);
+        var input = el.prevAll('input').first();
+        input.val(('%.2f', parseFloat(table.row(el.closest('table').closest('tr').prev()).data().amount)*0.1).toFixed(2));
     });
 
     // Add event listener for save button
@@ -230,9 +240,11 @@ function format_dimensions ( d ) {
           '<td>'+
           '<input type="number" size="7" value="'+(($.isNumeric(amount))?amount:"0.00")+'" /><br />'+
           '<button class="dimension-max dim-mini btn btn-danger">Max</button>'+
+          '<button class="dimension-90 dim-mini btn btn-warning">90%</button>'+
           '<button class="dimension-half dim-mini btn btn-warning">50%</button>'+
           '<button class="dimension-third dim-mini btn btn-success">33%</button>'+
           '<button class="dimension-quarter dim-mini btn btn-info">25%</button>'+
+          '<button class="dimension-ten dim-mini btn btn-info">10%</button>'+
           '</td>'+
           '<td>'+
           '<button class="dimension-save btn btn-secondary" data-dimension-type="product" data-account-entry-id="'+d.account_entry_id+'" data-product-id="'+product_id+'" data-product-dimension-id="'+(($.isNumeric(d.product[i].id))?d.product[i].id:"new")+'">Save</button>'+
@@ -271,9 +283,11 @@ function format_dimensions ( d ) {
           '<td>'+
           '<input type="number" size="7" value="'+(($.isNumeric(amount))?amount:"0.00")+'" /><br />'+
           '<button class="dimension-max dim-mini btn btn-danger">Max</button>'+
+          '<button class="dimension-90 dim-mini btn btn-warning">90%</button>'+
           '<button class="dimension-half dim-mini btn btn-warning">50%</button>'+
           '<button class="dimension-third dim-mini btn btn-success">33%</button>'+
           '<button class="dimension-quarter dim-mini btn btn-info">25%</button>'+
+          '<button class="dimension-ten dim-mini btn btn-warning">10%</button>'+
           '</td>'+
           '<td>'+
           '<button class="dimension-save btn btn-secondary" data-dimension-type="user" data-account-entry-id="'+d.account_entry_id+'" data-user-id="'+user_id+'" data-user-dimension-id="'+(($.isNumeric(d.user[i].id))?d.user[i].id:"new")+'">Save</button>'+
