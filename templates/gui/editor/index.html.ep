@@ -9,11 +9,6 @@ td > div {
   display:flex;
   justify-content: space-between;
 }
-button.dim-mini {
-  width:12.5%;
-  padding:2px;
-  margin:2px;
-}
 button.editor_refresh {
   margin:5px 0;
 }
@@ -122,35 +117,13 @@ $(document).ready(function() {
     } );
 
     // Add event listener for max button
-    $('#dimensions tbody').on('click', 'button.dimension-max', function (e) {
+    $('#dimensions tbody').on('click', 'button.dimension-percentage', function (e) {
         var el = $(this);
-        var input = el.prevAll('input').first();
-        input.val(table.row(el.closest('table').closest('tr').prev()).data().amount);
-    });
-    $('#dimensions tbody').on('click', 'button.dimension-90', function (e) {
-        var el = $(this);
-        var input = el.prevAll('input').first();
-        input.val(('%.2f', parseFloat(table.row(el.closest('table').closest('tr').prev()).data().amount)*0.9).toFixed(2));
-    });
-    $('#dimensions tbody').on('click', 'button.dimension-half', function (e) {
-        var el = $(this);
-        var input = el.prevAll('input').first();
-        input.val((parseFloat(table.row(el.closest('table').closest('tr').prev()).data().amount)/2).toFixed(2));
-    });
-    $('#dimensions tbody').on('click', 'button.dimension-third', function (e) {
-        var el = $(this);
-        var input = el.prevAll('input').first();
-        input.val((parseFloat(table.row(el.closest('table').closest('tr').prev()).data().amount)/3).toFixed(2));
-    });
-    $('#dimensions tbody').on('click', 'button.dimension-quarter', function (e) {
-        var el = $(this);
-        var input = el.prevAll('input').first();
-        input.val(('%.2f', parseFloat(table.row(el.closest('table').closest('tr').prev()).data().amount)/4).toFixed(2));
-    });
-    $('#dimensions tbody').on('click', 'button.dimension-ten', function (e) {
-        var el = $(this);
-        var input = el.prevAll('input').first();
-        input.val(('%.2f', parseFloat(table.row(el.closest('table').closest('tr').prev()).data().amount)*0.1).toFixed(2));
+        var percentage = el.prevAll('input').first().val();
+        var input = el.prevAll('input').eq(1);
+        if (!percentage) percentage=0;
+        else
+          input.val((parseFloat(table.row(el.closest('table').closest('tr').prev()).data().amount)*(parseFloat(percentage)/100)).toFixed(2));
     });
 
     // Add event listener for save button
@@ -238,13 +211,9 @@ function format_dimensions ( d ) {
           '<label for="entry-'+d.account_entry_id+'-product-dim">'+products[product_id]+'</label>'+
           '</td>'+
           '<td>'+
-          '<input type="number" size="7" value="'+(($.isNumeric(amount))?amount:"0.00")+'" /><br />'+
-          '<button class="dimension-max dim-mini btn btn-danger">Max</button>'+
-          '<button class="dimension-90 dim-mini btn btn-warning">90%</button>'+
-          '<button class="dimension-half dim-mini btn btn-warning">50%</button>'+
-          '<button class="dimension-third dim-mini btn btn-success">33%</button>'+
-          '<button class="dimension-quarter dim-mini btn btn-info">25%</button>'+
-          '<button class="dimension-ten dim-mini btn btn-info">10%</button>'+
+          '<input type="number" class="share" size="7" value="'+(($.isNumeric(amount))?amount:"0.00")+'" /><br />'+
+          '<input type="number" class="percentage" size="5" value="" /> %'+
+          '<button class="dimension-percentage btn btn-danger">Set</button>'+
           '</td>'+
           '<td>'+
           '<button class="dimension-save btn btn-secondary" data-dimension-type="product" data-account-entry-id="'+d.account_entry_id+'" data-product-id="'+product_id+'" data-product-dimension-id="'+(($.isNumeric(d.product[i].id))?d.product[i].id:"new")+'">Save</button>'+
@@ -282,12 +251,8 @@ function format_dimensions ( d ) {
           '</td>'+
           '<td>'+
           '<input type="number" size="7" value="'+(($.isNumeric(amount))?amount:"0.00")+'" /><br />'+
-          '<button class="dimension-max dim-mini btn btn-danger">Max</button>'+
-          '<button class="dimension-90 dim-mini btn btn-warning">90%</button>'+
-          '<button class="dimension-half dim-mini btn btn-warning">50%</button>'+
-          '<button class="dimension-third dim-mini btn btn-success">33%</button>'+
-          '<button class="dimension-quarter dim-mini btn btn-info">25%</button>'+
-          '<button class="dimension-ten dim-mini btn btn-warning">10%</button>'+
+          '<input type="number" size="5" value="" /> %'+
+          '<button class="dimension-percentage btn btn-danger">Set</button>'+
           '</td>'+
           '<td>'+
           '<button class="dimension-save btn btn-secondary" data-dimension-type="user" data-account-entry-id="'+d.account_entry_id+'" data-user-id="'+user_id+'" data-user-dimension-id="'+(($.isNumeric(d.user[i].id))?d.user[i].id:"new")+'">Save</button>'+
