@@ -50,12 +50,19 @@ sub datatable_content {
 
             # turn dimensions complete from amount to percentage
             my $amount = $account_entry->amount;
-            $entry->{product_dim_complete} = abs(sprintf('%.2f',
-                ($entry->{product_dim_complete}/$amount*100)))
-                    if $entry->{product_dim_complete} != 0;
-            $entry->{user_dim_complete} = abs(sprintf('%.2f',
-                ($entry->{user_dim_complete}/$amount*100)))
-                    if $entry->{user_dim_complete} != 0;
+            if ($amount != 0) {
+                $entry->{product_dim_complete} = abs(sprintf('%.2f',
+                    ($entry->{product_dim_complete}/$amount*100)));
+                $entry->{user_dim_complete} = abs(sprintf('%.2f',
+                    ($entry->{user_dim_complete}/$amount*100)));
+            } elsif ($amount == 0) {
+                $entry->{product_dim_complete} = $entry->{product_dim_complete} == 0
+                ? 100.00
+                : 999.99;
+                $entry->{user_dim_complete} = $entry->{user_dim_complete} == 0
+                ? 100.00
+                : 999.99;
+            }
 
             push @{$dimensions}, $entry;
         }
